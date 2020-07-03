@@ -37,8 +37,6 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
             timestamp = view.findViewById(R.id.textViewAuthor);
         }
     }
-
-
     public BookListAdapter(Context context, List<Book> notesList) {
         this.context = context;
         this.notesList = notesList;
@@ -62,13 +60,6 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
         if(!((note.getImagePath()).isEmpty())) {
             Picasso.get().load(f).into(holder.dot);
         }
-
-
-        /*// Displaying dot from HTML character code
-        holder.dot.setText(Html.fromHtml("&#8226;"));*/
-
-        // Formatting and displaying timestamp
-        //holder.timestamp.setText(formatDate(note.getTimestamp()));
     }
 
     @Override
