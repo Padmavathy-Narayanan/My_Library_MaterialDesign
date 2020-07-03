@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_simg"
+    tools:context=".activity.MainActivity">
+
+        <ImageView
+            android:id="@+id/splash"
+            android:background="@drawable/bg_spalsh"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:src="@drawable/splash"
+            android:layout_height="@dimen/_200sdp"/>
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/splash"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_90sdp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="Explore the world of books"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv1"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_11sdp"
+            android:text="Always worth a browse"/>
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_below="@+id/tv2"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_width="match_parent"
+            android:text="Get Started"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_splash_button"
+            android:layout_height="wrap_content"
+            />
+
+</RelativeLayout>

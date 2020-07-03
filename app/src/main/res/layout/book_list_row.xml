@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingBottom="@dimen/_10sdp"
+    android:paddingLeft="@dimen/_16sdp"
+    android:paddingRight="@dimen/_16sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:layout_height="wrap_content">
+
+   <!-- <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        xmlns:card_view="https://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@color/color_white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="5dp"
+        card_view:cardUseCompatPadding="true">-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        android:backgroundTint="@color/light200"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
+        android:layout_margin="1dp"
+        >
+            <ImageView
+                android:id="@+id/imageView"
+                android:tag="image_tag"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginRight="@dimen/_1sdp"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:src="@drawable/ic_baseline_library_books_24"/>
+    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_toRightOf="@id/card"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:maxLines="5"
+                    android:text="Book Name"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:id="@+id/authortitle"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_below="@id/textViewName"
+                android:layout_toRightOf="@id/card"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins"
+                android:text="Author(s):  "
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:textSize="@dimen/_11sdp" />
+
+            <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@id/textViewName"
+                 android:layout_marginTop="@dimen/_9sdp"
+                 android:layout_toRightOf="@id/authortitle"
+                 android:text="Author"
+                 android:maxLines="5"
+                 android:layout_marginLeft="@dimen/_5sdp"
+                 android:id="@+id/textViewAuthor"
+                 android:fontFamily="@font/poppins"
+                 android:textSize="@dimen/_11sdp"
+                 android:textColor="@color/black"/>
+
+        </RelativeLayout>
+
+<!--    </androidx.cardview.widget.CardView>-->
