@@ -73,13 +73,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public Book getNote(String id) {
+    public Book getNote(long id) {
         // get readable database as we are not inserting anything
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Book.TABLE_NAME,
                 new String[]{Book.COLUMN_ID, Book.COLUMN_BOOK, Book.COLUMN_AUTHOR ,Book.COLUMN_ISBN,Book.COLUMN_CONDITION,Book.COLUMN_MARKING,Book.COLUMN_BINDING,Book.COLUMN_LOCATION,Book.COLUMN_LENT_PRICE, Book.COLUMN_BOOK_PRICE,Book.COLUMN_PAID_PRICE,Book.COLUMN_QUANTITY,Book.COLUMN_IMG_PATH},
-                Book.COLUMN_ISBN + "=?",
+                Book.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null)
@@ -160,7 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    /*public int updateNote(Book note) {
+    public int updateNote(Book note) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -175,11 +175,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Book.COLUMN_BOOK_PRICE,note.getBook_price());
         values.put(Book.COLUMN_PAID_PRICE,note.getPaid_price());
         values.put(Book.COLUMN_QUANTITY,note.getQuantity());
+        values.put(Book.COLUMN_IMG_PATH,note.getImagePath());
 
         // updating row
         return db.update(Book.TABLE_NAME, values, Book.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(note.getId())});
-    }*/
+    }
 
     public int updateNote(String book, String author,String isbn,String condition,String marking,String binding,String location,String lent_price,String book_price,String paid_price,String quantity,String imagePath) {
         // get writable database as we want to write data

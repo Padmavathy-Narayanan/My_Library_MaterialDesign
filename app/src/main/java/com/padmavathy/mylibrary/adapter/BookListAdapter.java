@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +23,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookViewHolder> {
+public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookViewHolder> implements Filterable {
     private Context context;
     private List<Book> notesList;
+    private List<Book> exampleListFull;
 
     public class BookViewHolder extends RecyclerView.ViewHolder {
         public TextView note;
@@ -40,14 +43,15 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
     public BookListAdapter(Context context, List<Book> notesList) {
         this.context = context;
         this.notesList = notesList;
+        exampleListFull = new ArrayList<>(notesList);
     }
 
     @Override
     public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.book_list_row, parent, false);
-
         return new BookViewHolder(itemView);
+
     }
 
     @Override
@@ -57,7 +61,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
         Log.d("IMG",note.getImagePath());
         holder.timestamp.setText(note.getAuthor());
         holder.note.setText(note.getBook());
-        if(!((note.getImagePath()).isEmpty())) {
+        if(!note.getImagePath().isEmpty()) {
             Picasso.get().load(f).into(holder.dot);
         }
     }
@@ -94,4 +98,35 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
 
         return "";
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Book> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Book item : exampleListFull) {
+                    if (item.getBook().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            notesList.clear();
+            notesList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }

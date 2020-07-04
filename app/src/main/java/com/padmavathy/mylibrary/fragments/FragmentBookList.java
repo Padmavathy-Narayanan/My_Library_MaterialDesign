@@ -16,29 +16,42 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.internal.NavigationMenu;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.adapter.BookListAdapter;
 import com.padmavathy.mylibrary.database.DatabaseHelper;
 import com.padmavathy.mylibrary.model.Book;
 import com.padmavathy.mylibrary.utils.MyDividerItemDecoration;
+import com.padmavathy.mylibrary.utils.RecyclerTouchListener;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -59,6 +72,12 @@ public class FragmentBookList extends Fragment {
     private DatabaseHelper db;
     Book n;
 
+    private FragmentViewBook fragment;
+    private FragmentAddBook fragmentAddBook;
+    SearchView searchMain;
+    String task;
+    Toolbar toolbar;
+    TextView tv_tool;
     public FragmentBookList() {
         // Required empty public constructor
     }
@@ -69,24 +88,75 @@ public class FragmentBookList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View postView1 = inflater.inflate(R.layout.fragment_book_list, container, false);
+        /*toolbar = postView1.findViewById(R.id.toolbar_view);
+        tv_tool = postView1.findViewById(R.id.tv_view_toolbar);*/
 
         db = new DatabaseHelper(getActivity());
+        n = new Book();
 
         notesList.addAll(db.getAllNotes());
+
+        fragment =  new FragmentViewBook();
+        fragmentAddBook = new FragmentAddBook();
 
         // Button refresh1 = postView1.findViewById(R.id.refresh1);
         builder_1 = new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         recyclerView = postView1.findViewById(R.id.recycler_view);
+        searchMain = (SearchView) postView1.findViewById(R.id.search_main);
         mAdapter = new BookListAdapter(getContext(), notesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(mAdapter);
+
+        searchMain.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchMain.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        /**
+         * On long press on RecyclerView item, open alert dialog
+         * with options to choose
+         * Edit and Delete
+         * */
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
+                recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, final int position) {
+                n = notesList.get(position);
+                Bundle args = new Bundle();
+                args.putString("Key", String.valueOf(n.getId()));
+                fragment.setArguments(args);
+                handleFragments(fragment);
+                //Toast.makeText(getActivity(),""+n.getIsbn(),Toast.LENGTH_LONG).show();
+                /*Intent i = new Intent(getActivity(), BookViewActivity.class);
+                i.putExtra("Note",notesList.get(position));
+                startActivity(i);
+*/
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                //showActionsDialog(position);
+            }
+
+        }));
+
         //toggleEmptyNotes();
 
         return postView1;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +164,7 @@ public class FragmentBookList extends Fragment {
         setHasOptionsMenu(true);
 
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -144,11 +215,92 @@ public class FragmentBookList extends Fragment {
                 // Do Fragment menu item stuff here
                 return true;
 
+            case R.id.filter:
+                showAlertDialog();
+                return true;
+
+            case R.id.add_book:
+                handleFragments(fragmentAddBook);
+                //Toast.makeText(getActivity(),"Add Book",Toast.LENGTH_LONG).show();
+                break;
+            case R.id.action_text:
+                Toast.makeText(getActivity(),"Add Borrowed Book",Toast.LENGTH_LONG).show();
+                break;
             default:
                 break;
         }
 
         return false;
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Filter Book Details");
+        String[] items = {"By Title","By Author","By Date","By Condition"};
+        int checkedItem = 1;
+
+        alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        // Toast.makeText(MainActivity.this, "By Title", Toast.LENGTH_LONG).show();
+                        Collections.sort(notesList, new Comparator<Book>() {
+                            @Override
+                            public int compare(Book lhs, Book rhs) {
+                                String lhs_book = lhs.getBook();
+                                String rhs_book = rhs.getBook();
+                                return lhs_book.compareTo(rhs_book);
+                            }
+                        });
+                        mAdapter = new BookListAdapter(getContext(),notesList);
+                        recyclerView.setAdapter(mAdapter);
+                        recyclerView.invalidate();
+                        mAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        break;
+                    case 1:
+                        // Toast.makeText(MainActivity.this, "By Author", Toast.LENGTH_LONG).show();
+                        Collections.sort(notesList, new Comparator<Book>() {
+                            @Override
+                            public int compare(Book lhs, Book rhs) {
+
+                                String lhs_book = lhs.getAuthor();
+                                String rhs_book = rhs.getAuthor();
+                                return lhs_book.compareTo(rhs_book);
+                            }
+                        });
+                        mAdapter = new BookListAdapter(getContext(),notesList);
+                        recyclerView.setAdapter(mAdapter);
+                        recyclerView.invalidate();
+                        mAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        break;
+                    case 2:
+                        Toast.makeText(getContext(), "By Date", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        break;
+                    case 3:
+                        Collections.sort(notesList, new Comparator<Book>() {
+                            @Override
+                            public int compare(Book lhs, Book rhs) {
+                                return lhs.getCondition().compareTo(rhs.getCondition());
+                            }
+                        });
+                        mAdapter = new BookListAdapter(getContext(),notesList);
+                        recyclerView.setAdapter(mAdapter);
+                        recyclerView.invalidate();
+                        mAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        //Toast.makeText(MainActivity.this, "By Condition", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+
     }
 
     private boolean checkPermission() {
@@ -250,9 +402,24 @@ public class FragmentBookList extends Fragment {
 
                     String line_1 = "Book [Location=" + employee[0] + ", Book=" + employee[1] + ", Name=" + employee[2] + ", ISBN=" + employee[3] + ", Condiiton= " + employee[4] + ", Marking= " + employee[5] + ", Binding= " + employee[6] + ", Lent Price= " + employee[7] + ", Book Price= " + employee[8] + ", Paid Price= " + employee[9] + ", Quantity= " + employee[10] + "]";
                     Log.d("Book Details: ",line_1+"\n");
+
+                    n.setIsbn(employee[3]);
+                    n.setBook(employee[1]);
+                    n.setAuthor(employee[2]);
+                    n.setMarking(employee[5]);
+                    n.setBinding(employee[6]);
+                    n.setLocation(employee[0]);
+                    n.setCondition(employee[4]);
+                    n.setLent_price(employee[7]);
+                    n.setBook_price(employee[8]);
+                    n.setPaid_price(employee[9]);
+                    n.setQuantity(employee[10]);
+                    n.setImagePath("");
+
+                    Log.d("ISBN",employee[3]);
                     long id = db.insertNote(employee[1],employee[2],employee[3],employee[4],employee[5],employee[6],employee[0],employee[7],employee[8],employee[9],employee[10],"");
 
-                    n = db.getNote(employee[3]);
+                    n = db.getNote(id);
 
                     if (n != null) {
                         // adding new note to array list at 0 position
@@ -262,7 +429,6 @@ public class FragmentBookList extends Fragment {
                         mAdapter.notifyDataSetChanged();
                         //pd.dismiss();
                         //toggleEmptyNotes();
-
                     }
 
                     }
@@ -302,4 +468,11 @@ public class FragmentBookList extends Fragment {
 
         return text.toString();
     }
+
+    private void handleFragments(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame1, fragment);
+        fragmentTransaction.commit();
+    }
+
 }

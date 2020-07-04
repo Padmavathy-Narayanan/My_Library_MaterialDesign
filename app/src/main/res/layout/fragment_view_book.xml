@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_fragment_view"
+            android:id="@+id/toolbar_fragment"/>
+        <ImageView
+            android:id="@+id/dot_book"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:lineSpacingExtra="0dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
+            android:src="@drawable/ic_baseline_library_books_24"
+            android:textSize="@dimen/_40sdp" />
+
+        <TextView
+            android:id="@+id/timestamp_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:layout_toRightOf="@id/dot_book"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLines="5"
+            android:textStyle="bold"
+            android:text="Book Name"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:id="@+id/authortitle"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timestamp_book"
+            android:layout_toRightOf="@id/dot_book"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Author(s):  "
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:textSize="@dimen/_11sdp" />
+
+        <TextView
+            android:id="@+id/authorname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timestamp_book"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_toRightOf="@id/authortitle"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Author"
+            android:maxLines="3"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textSize="@dimen/_11sdp" />
+
+        <Button
+            android:id="@+id/lentout"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="LENT OUT"
+            android:background="@drawable/rect_bg"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:layout_below="@+id/authorname"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp"
+            />
+
+        <Button
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="LENT IN"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:layout_below="@+id/authorname"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:id="@+id/lentin"
+            android:background="@drawable/rect_bg"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_35sdp"
+            android:layout_toRightOf="@+id/lentout"
+            android:textSize="@dimen/_11sdp"
+            />
+        <Button
+            android:id="@+id/view"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="VIEW"
+            android:background="@drawable/rect_bg"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:layout_below="@+id/authorname"
+            android:layout_marginLeft="@dimen/_33sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_toRightOf="@+id/lentin"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
+            />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/view"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_marginBottom="@dimen/_70sdp"
+            android:layout_below="@+id/view"
+            android:layout_width="match_parent"
+            android:background="@drawable/rect_background"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DETAILS"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_isbn"
+                android:layout_below="@+id/details"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="ISBN: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_isbn"
+                android:layout_below="@+id/details"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:id="@+id/isbn_no"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_marking"
+                android:layout_below="@+id/tv_isbn"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Marking: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/marking_det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_marking"
+                android:layout_below="@+id/isbn_no"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_binding"
+                android:layout_below="@+id/tv_marking"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Binding: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/binding_det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_marking"
+                android:layout_below="@+id/marking_det"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_location"
+                android:layout_below="@+id/tv_binding"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Location: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/location_det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_marking"
+                android:layout_below="@+id/binding_det"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <RelativeLayout
+                android:id="@+id/rel_condiiton"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/location_det"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_condiiton"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="Condition: "
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/condition_det"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_condiiton"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="xxxxxxx"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginLeft="@dimen/_6sdp"
+                    android:fontFamily="@font/poppins"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_lentto"
+                android:layout_below="@+id/rel_condiiton"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Lent To: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_lentto"
+                android:layout_below="@+id/rel_condiiton"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:id="@+id/lentto_no"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_book_price"
+                android:layout_below="@+id/tv_lentto"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Book Price: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/book_price_det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_marking"
+                android:layout_below="@+id/lentto_no"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_paidprice"
+                android:layout_below="@+id/tv_book_price"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Paid Price: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/paidprice_det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_marking"
+                android:layout_below="@+id/book_price_det"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_quantity"
+                android:layout_below="@+id/tv_paidprice"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Quantity: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/quantity_det"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_marking"
+                android:layout_below="@+id/paidprice_det"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="xxxxxxx"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:textStyle="bold"/>
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+
+
+    </RelativeLayout>
+    

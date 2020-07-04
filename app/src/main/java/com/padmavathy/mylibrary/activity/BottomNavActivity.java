@@ -1,12 +1,14 @@
 package com.padmavathy.mylibrary.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -18,6 +20,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +38,8 @@ public class BottomNavActivity extends AppCompatActivity {
     private FragmentBorrowedBook fragment3;
     private FragmenrHistoryBorrowedBook fragment4;
     private BottomNavigationView mBottom;
+    TextView tv;
+    String task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,7 @@ public class BottomNavActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("My Library");
         toolbar.setTitleTextAppearance(this, R.style.RobotoBoldTextAppearance);
         mBottom = findViewById(R.id.basic_bottom);
+        tv = (TextView)findViewById(R.id.tv_view_toolbar);
 
         fragment1 =  new FragmentBookList();
         fragment2 = new FragmentOnlineBookSearch();
@@ -53,6 +60,14 @@ public class BottomNavActivity extends AppCompatActivity {
 
         //default fragment that should be visible on open
         handleFragments(fragment1);
+        SharedPreferences prefs = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+        String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
+        if(!name.trim().isEmpty()){
+            tv.setText(name);
+        }
+        else {
+            tv.setText("My Library");
+        }
 
         //pass fragments that should be visible in following switch case
         mBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,13 +107,30 @@ public class BottomNavActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.action_add:
-                Toast.makeText(BottomNavActivity.this,"IMPORT",Toast.LENGTH_LONG).show();
-                return false;
-            case R.id.action_settings:
-                //startSettings();
-                Toast.makeText(BottomNavActivity.this,"EXPORT",Toast.LENGTH_LONG).show();
-                return false;
+            /*case R.id.action_add:
+                //Toast.makeText(BottomNavActivity.this,"IMPORT",Toast.LENGTH_LONG).show();
+                return false;*/
+            case R.id.change_title:
+                final EditText taskEditText = new EditText(BottomNavActivity.this);
+                AlertDialog dialog = new AlertDialog.Builder(BottomNavActivity.this)
+                        .setTitle("Change Title")
+                        .setView(taskEditText)
+                        .setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                task  = String.valueOf(taskEditText.getText());
+                                // MY_PREFS_NAME - a static String variable like:
+                                //public static final String MY_PREFS_NAME = "MyPrefsFile";
+                                SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                                editor.putString("name", task);
+                                editor.apply();
+                                tv.setText(task);
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .create();
+                dialog.show();
+                return true;
             default:
                 break;
         }
@@ -110,6 +142,7 @@ public class BottomNavActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame1, fragment);
         fragmentTransaction.commit();
     }
+
 
 
 }

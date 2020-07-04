@@ -11,4 +11,25 @@
         app:showAsAction="never"
         android:title="Export">
     </item>
+    <item
+        android:id="@+id/change_title"
+        app:showAsAction="never"
+        android:title="Change Title"/>
+
+    <item
+        android:id="@+id/filter"
+        app:showAsAction="always"
+        android:title="Filter"
+        android:icon="@drawable/filter"/>
+    <item
+        android:id="@+id/action_text"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_system_update_alt_24"
+        android:title="Add Borrowed Books"/>
+
+    <item
+        android:id="@+id/add_book"
+        android:icon="@drawable/ic_add_white_24dp"
+        app:showAsAction="always"
+        android:title="TODO" />
 </menu>

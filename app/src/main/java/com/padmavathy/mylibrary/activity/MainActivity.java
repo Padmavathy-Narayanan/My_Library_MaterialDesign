@@ -2,6 +2,7 @@ package com.padmavathy.mylibrary.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -43,6 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         firstRun = settings.getBoolean("firstRun", true);
 
+        SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        if(pref.getBoolean("activity_executed", false)){
+            Intent intent = new Intent(this, BottomNavActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            SharedPreferences.Editor ed = pref.edit();
+            ed.putBoolean("activity_executed", true);
+            ed.commit();
+        }
+
         /*Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);*/
 
@@ -55,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         img = findViewById(R.id.splash);
         b = findViewById(R.id.btn);
 
-        if(firstRun) {
+        /*if(firstRun) {*/
 
             SharedPreferences.Editor editor = settings.edit();
             firstRun =  false;
@@ -105,12 +117,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        else {
+        /*else {
             Intent intent = new Intent(MainActivity.this,
                     BottomNavActivity.class);
             startActivity(intent);
-        }
-    }
+        }*/
+
 
     private void transparentStatusAndNavigation() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -143,32 +155,7 @@ public class MainActivity extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-
-   /* private class SplashTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-              //  Thread.sleep(2000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            finish();
-
-            Intent intent = new Intent(MainActivity.this,
-                    BottomNavActivity.class);
-            startActivity(intent);
-
-        }
-    }*/
-
-    @Override
+  /*  @Override
     public void onResume() {
         super.onResume();
         SharedPreferences settings = getSharedPreferences("prefs", 0);
@@ -180,5 +167,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d("TAG1", "firstRun(true): " + Boolean.valueOf(firstRun).toString());
         }
-    }
+    }*/
 }

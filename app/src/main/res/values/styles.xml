@@ -53,11 +53,14 @@
         <item name="android:windowIsFloating">false</item>
     </style>
     <!-- Insta app theme -->
-    <style name="AppThemeInsta" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeInsta" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/instaPrimary</item>
         <item name="colorPrimaryDark">@color/light200</item>
         <item name="colorAccent">@color/instaAccent</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColorSecondary">@color/colorPrimary</item>
+    </style>
+    <style name="MyActionBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 </resources>

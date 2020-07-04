@@ -7,7 +7,7 @@
     tools:context=".activity.BottomNavActivity">
     <include
         android:id="@+id/bottom_tool1"
-        layout="@layout/toolbar_custom" />
+        layout="@layout/toolbar_custom_1" />
 
     <FrameLayout
         android:id="@+id/frame1"

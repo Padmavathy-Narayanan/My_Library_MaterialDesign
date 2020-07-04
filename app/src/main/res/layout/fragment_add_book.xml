@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".EditBookActivity"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_edit_fragment_view"
+            android:id="@+id/toolbar_edit_fragment"/>
+
+        <RelativeLayout
+            android:id="@+id/img_rel_add"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="@dimen/_70sdp">
+
+            <ImageView
+                android:id="@+id/img_add"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:background="#ffffff"
+                android:src="@drawable/ic_baseline_camera_alt_24"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/img_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="@dimen/_13sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/title_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:inputType="text"
+                android:layout_below="@+id/tv_title"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp" />
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:layout_below="@+id/title_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/authors_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Author's"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:inputType="text"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/tv_author"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_isbn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ISBN"
+                android:layout_below="@+id/authors_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/isbn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ISBN"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:inputType="number"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/tv_isbn"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_condiiton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Condition"
+                android:layout_below="@+id/isbn_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <!-- Spinner Element -->
+            <EditText
+                android:id="@+id/spinner_add"
+                android:clickable="true"
+                android:editable="false"
+                android:layout_below="@+id/tv_condiiton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:focusable="false"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_marking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Markings"
+                android:layout_below="@+id/spinner_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <!-- Spinner Element -->
+            <EditText
+                android:id="@+id/spinner_markings_add"
+                android:layout_below="@+id/tv_marking"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:focusable="false"
+                android:editable="false"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:layout_marginTop="@dimen/_8sdp"
+                android:id="@+id/tv_binding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Binding"
+                android:layout_below="@+id/spinner_markings_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <!-- Spinner Element -->
+            <EditText
+                android:id="@+id/spinner_bindings_add"
+                android:layout_below="@+id/tv_binding"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:clickable="true"
+                android:focusable="false"
+                android:editable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:layout_marginTop="@dimen/_8sdp"
+                android:id="@+id/tv_loc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:layout_below="@+id/spinner_bindings_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/loc_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:inputType="text"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:layout_below="@+id/tv_loc"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Price"
+                android:layout_below="@+id/loc_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/price_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Book Price"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/tv_price"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_paidprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price Paid"
+                android:layout_below="@+id/price_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/PricePaid_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price Paid"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:layout_below="@+id/tv_paidprice"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_lentto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lent to"
+                android:layout_below="@+id/PricePaid_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/Lent_to_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lent to"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:layout_below="@+id/tv_lentto"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_Datelentto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date Lent"
+                android:layout_below="@+id/Lent_to_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/Datelent_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date Lent"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/tv_Datelentto"
+                android:textColor="@color/colorPrimaryDark"
+                android:clickable="true"
+                android:focusable="false"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:editable="false"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_Datelentin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date Returned"
+                android:layout_below="@+id/Datelent_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/Datereturn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date Returned"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:focusable="false"
+                android:layout_below="@+id/tv_Datelentin"
+                android:clickable="true"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:editable="false"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:layout_below="@+id/Datereturn_add"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/Quantity_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quantity"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/tv_quantity"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_70sdp"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
