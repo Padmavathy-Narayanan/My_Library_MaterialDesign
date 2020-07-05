@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "MyLibrary_db";
+    private static final String DATABASE_NAME = "MyLibray_db";
 
 
     public DatabaseHelper(Context context) {
@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertNote(String book, String author,String isbn,String condition,String marking,String binding,String location,String lent_price,String book_price,String paid_price,String quantity,String Imagepath) {
+    public long insertNote(String book, String author,String isbn,String condition,String marking,String binding,String location,String lent_price,String book_price,String paid_price,String quantity,String Imagepath,String dateLent,String dateReturned,String currentTimesatmp) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -62,6 +62,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValue.put(Book.COLUMN_PAID_PRICE,paid_price);
         contentValue.put(Book.COLUMN_QUANTITY,quantity);
         contentValue.put(Book.COLUMN_IMG_PATH,Imagepath);
+        contentValue.put(Book.COLUMN_DATE_LENT,dateLent);
+        contentValue.put(Book.COLUMN_DATE_RETURNED,dateReturned);
+        contentValue.put(Book.COLUMN_CURRENT_DATE,currentTimesatmp);
 
         // insert row
         long id = db.insert(Book.TABLE_NAME, null, contentValue);
@@ -78,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Book.TABLE_NAME,
-                new String[]{Book.COLUMN_ID, Book.COLUMN_BOOK, Book.COLUMN_AUTHOR ,Book.COLUMN_ISBN,Book.COLUMN_CONDITION,Book.COLUMN_MARKING,Book.COLUMN_BINDING,Book.COLUMN_LOCATION,Book.COLUMN_LENT_PRICE, Book.COLUMN_BOOK_PRICE,Book.COLUMN_PAID_PRICE,Book.COLUMN_QUANTITY,Book.COLUMN_IMG_PATH},
+                new String[]{Book.COLUMN_ID, Book.COLUMN_BOOK, Book.COLUMN_AUTHOR ,Book.COLUMN_ISBN,Book.COLUMN_CONDITION,Book.COLUMN_MARKING,Book.COLUMN_BINDING,Book.COLUMN_LOCATION,Book.COLUMN_LENT_PRICE, Book.COLUMN_BOOK_PRICE,Book.COLUMN_PAID_PRICE,Book.COLUMN_QUANTITY,Book.COLUMN_IMG_PATH,Book.COLUMN_DATE_LENT,Book.COLUMN_DATE_RETURNED,Book.COLUMN_CURRENT_DATE},
                 Book.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -99,7 +102,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndex(Book.COLUMN_BOOK_PRICE)),
                 cursor.getString(cursor.getColumnIndex(Book.COLUMN_PAID_PRICE)),
                 cursor.getString(cursor.getColumnIndex(Book.COLUMN_QUANTITY)),
-                cursor.getString(cursor.getColumnIndex(Book.COLUMN_IMG_PATH)));
+                cursor.getString(cursor.getColumnIndex(Book.COLUMN_IMG_PATH)),
+                cursor.getString(cursor.getColumnIndex(Book.COLUMN_DATE_LENT)),
+                cursor.getString(cursor.getColumnIndex(Book.COLUMN_DATE_RETURNED)),
+                cursor.getString(cursor.getColumnIndex(Book.COLUMN_CURRENT_DATE)));
 
         // close the db connection
         cursor.close();
@@ -135,6 +141,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 note.setPaid_price(cursor.getString(cursor.getColumnIndex(Book.COLUMN_PAID_PRICE)));
                 note.setQuantity(cursor.getString(cursor.getColumnIndex(Book.COLUMN_QUANTITY)));
                 note.setImagePath(cursor.getString(cursor.getColumnIndex(Book.COLUMN_IMG_PATH)));
+                note.setDateLent(cursor.getString(cursor.getColumnIndex(Book.COLUMN_DATE_LENT)));
+                note.setDateReturned(cursor.getString(cursor.getColumnIndex(Book.COLUMN_DATE_RETURNED)));
+                note.setCurrentTimestamp(cursor.getString(cursor.getColumnIndex(Book.COLUMN_CURRENT_DATE)));
 
                 notes.add(note);
             } while (cursor.moveToNext());
@@ -176,6 +185,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Book.COLUMN_PAID_PRICE,note.getPaid_price());
         values.put(Book.COLUMN_QUANTITY,note.getQuantity());
         values.put(Book.COLUMN_IMG_PATH,note.getImagePath());
+        values.put(Book.COLUMN_DATE_LENT,note.getDateLent());
+        values.put(Book.COLUMN_DATE_RETURNED,note.getDateReturned());
+        values.put(Book.COLUMN_CURRENT_DATE,note.getCurrentTimestamp());
 
         // updating row
         return db.update(Book.TABLE_NAME, values, Book.COLUMN_ID + " = ?",

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingBottom="@dimen/_10sdp"
+    android:paddingLeft="@dimen/_16sdp"
+    android:paddingRight="@dimen/_16sdp"
+    android:paddingTop="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/dot_History"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:lineSpacingExtra="0dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:src="@drawable/ic_borrow_icon" />
+
+    <TextView
+        android:id="@+id/title_his"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_toRightOf="@+id/dot_History"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins"
+        android:maxLines="5"
+        android:text="Title"
+        android:textSize="@dimen/_13sdp" />
+
+    <TextView
+        android:id="@+id/authortitle_bor"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_his"
+        android:layout_toRightOf="@+id/dot_History"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/poppins"
+        android:text="Person Name:  "
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/personNameHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_his"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/poppins"
+        android:layout_toRightOf="@+id/authortitle_bor"
+        android:textColor="@color/black"
+        android:text="Name"
+        android:maxLines="3"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/dateBorr"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/personNameHistory"
+        android:layout_toRightOf="@+id/dot_History"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/poppins"
+        android:text="Date Borrowed:"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/dateBorrowHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/personNameHistory"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins"
+        android:layout_toRightOf="@+id/dateBorr"
+        android:textColor="@color/black"
+        android:text="Date Borrowed"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/dateRet"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateBorr"
+        android:layout_toRightOf="@+id/dot_History"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/poppins"
+        android:text="Date Returned:"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/dateReturned_HISTORY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateBorrowHistory"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/poppins"
+        android:layout_toRightOf="@+id/dateRet"
+        android:textColor="@color/black"
+        android:text="Date Returned"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textSize="@dimen/_12sdp" />
+
+    <RelativeLayout
+        android:layout_below="@+id/dateReturned_HISTORY"
+        android:layout_width="match_parent"
+        android:id="@+id/bor_move_his"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_160sdp"
+        android:background="@drawable/rounded_rect_1_background"
+        android:layout_height="@dimen/_35sdp">
+
+        <ImageView
+            android:id="@+id/dummy_img"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:paddingTop="@dimen/_1sdp"
+            android:layout_toLeftOf="@+id/move"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/ic_baseline_delete_sweep_24"
+            />
+        <TextView
+            android:id="@+id/move"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textSize="@dimen/_12sdp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_rect_background" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

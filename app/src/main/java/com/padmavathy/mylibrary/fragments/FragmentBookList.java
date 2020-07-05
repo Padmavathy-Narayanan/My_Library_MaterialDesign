@@ -45,10 +45,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
@@ -78,6 +83,8 @@ public class FragmentBookList extends Fragment {
     String task;
     Toolbar toolbar;
     TextView tv_tool;
+    private TextView noNotesView;
+
     public FragmentBookList() {
         // Required empty public constructor
     }
@@ -94,16 +101,20 @@ public class FragmentBookList extends Fragment {
         db = new DatabaseHelper(getActivity());
         n = new Book();
 
+        if(notesList!=null && notesList.size()>0){
+            notesList.clear();
+        }
         notesList.addAll(db.getAllNotes());
-
         fragment =  new FragmentViewBook();
         fragmentAddBook = new FragmentAddBook();
 
-        // Button refresh1 = postView1.findViewById(R.id.refresh1);
         builder_1 = new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         recyclerView = postView1.findViewById(R.id.recycler_view);
         searchMain = (SearchView) postView1.findViewById(R.id.search_main);
+        noNotesView = postView1.findViewById(R.id.empty_notes_view);
+
         mAdapter = new BookListAdapter(getContext(), notesList);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -118,6 +129,7 @@ public class FragmentBookList extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
+                mAdapter.notifyDataSetChanged();
                 mAdapter.getFilter().filter(newText);
                 return false;
             }
@@ -151,7 +163,7 @@ public class FragmentBookList extends Fragment {
 
         }));
 
-        //toggleEmptyNotes();
+        toggleEmptyNotes();
 
         return postView1;
     }
@@ -224,7 +236,7 @@ public class FragmentBookList extends Fragment {
                 //Toast.makeText(getActivity(),"Add Book",Toast.LENGTH_LONG).show();
                 break;
             case R.id.action_text:
-                Toast.makeText(getActivity(),"Add Borrowed Book",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Wishlist",Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
@@ -277,7 +289,29 @@ public class FragmentBookList extends Fragment {
                         dialog.dismiss();
                         break;
                     case 2:
-                        Toast.makeText(getContext(), "By Date", Toast.LENGTH_LONG).show();
+                        Collections.sort(notesList, new Comparator<Book>(){
+                            public int compare(Book date1, Book date2){
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYY hh:mm:ss aa", Locale.ENGLISH);
+
+                                Date d1=null;
+                                Date d2= null;
+
+                                try {
+                                    d1=sdf.parse(String.valueOf(date1.getCurrentTimestamp()));
+                                    d2= sdf.parse(String.valueOf(date2.getCurrentTimestamp()));
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                if(d1 != null && d1.after(d2)){
+                                    return -1;
+                                }else{
+                                    return 1;
+                                }
+                            }
+
+                        });
+                        /*Toast.makeText(getContext(), "By Date", Toast.LENGTH_LONG).show();*/
                         dialog.dismiss();
                         break;
                     case 3:
@@ -403,6 +437,18 @@ public class FragmentBookList extends Fragment {
                     String line_1 = "Book [Location=" + employee[0] + ", Book=" + employee[1] + ", Name=" + employee[2] + ", ISBN=" + employee[3] + ", Condiiton= " + employee[4] + ", Marking= " + employee[5] + ", Binding= " + employee[6] + ", Lent Price= " + employee[7] + ", Book Price= " + employee[8] + ", Paid Price= " + employee[9] + ", Quantity= " + employee[10] + "]";
                     Log.d("Book Details: ",line_1+"\n");
 
+                    String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                    Log.d("Current DateTime",currentDateTimeString);
+                    DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+                    Date date = null;
+                    try {
+                        date = format.parse(currentDateTimeString);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("PADMAVATHYAPP"+date); // Sat Jan 02 00:00:00 GMT 2010
+
                     n.setIsbn(employee[3]);
                     n.setBook(employee[1]);
                     n.setAuthor(employee[2]);
@@ -415,9 +461,12 @@ public class FragmentBookList extends Fragment {
                     n.setPaid_price(employee[9]);
                     n.setQuantity(employee[10]);
                     n.setImagePath("");
+                    n.setDateLent("");
+                    n.setDateReturned("");
+                    n.setCurrentTimestamp(currentDateTimeString);
 
                     Log.d("ISBN",employee[3]);
-                    long id = db.insertNote(employee[1],employee[2],employee[3],employee[4],employee[5],employee[6],employee[0],employee[7],employee[8],employee[9],employee[10],"");
+                    long id = db.insertNote(employee[1],employee[2],employee[3],employee[4],employee[5],employee[6],employee[0],employee[7],employee[8],employee[9],employee[10],"","","",currentDateTimeString);
 
                     n = db.getNote(id);
 
@@ -428,7 +477,7 @@ public class FragmentBookList extends Fragment {
                         // refreshing the list
                         mAdapter.notifyDataSetChanged();
                         //pd.dismiss();
-                        //toggleEmptyNotes();
+                        toggleEmptyNotes();
                     }
 
                     }
@@ -473,6 +522,17 @@ public class FragmentBookList extends Fragment {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame1, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void toggleEmptyNotes() {
+        // you can check notesList.size() > 0
+
+        if (db.getNotesCount() > 0) {
+            noNotesView.setText("Collections is empty!");
+            noNotesView.setVisibility(View.GONE);
+        } else {
+            noNotesView.setVisibility(View.VISIBLE);
+        }
     }
 
 }

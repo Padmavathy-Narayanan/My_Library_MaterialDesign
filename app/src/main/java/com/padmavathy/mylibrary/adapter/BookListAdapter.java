@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.padmavathy.mylibrary.R;
@@ -29,20 +31,23 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
     private List<Book> exampleListFull;
 
     public class BookViewHolder extends RecyclerView.ViewHolder {
-        public TextView note;
-        public ImageView dot;
-        public TextView timestamp;
+        private TextView note;
+        private ImageView dot;
+        private TextView timestamp;
+        private RelativeLayout relBookList;
 
-        public BookViewHolder(View view) {
+        public BookViewHolder(@NonNull View view) {
             super(view);
             note = view.findViewById(R.id.textViewName);
             dot = view.findViewById(R.id.imageView);
             timestamp = view.findViewById(R.id.textViewAuthor);
+            relBookList = view.findViewById(R.id.rel_book_list);
         }
     }
     public BookListAdapter(Context context, List<Book> notesList) {
         this.context = context;
         this.notesList = notesList;
+        //setHasStableIds(true);
         exampleListFull = new ArrayList<>(notesList);
     }
 
@@ -50,7 +55,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
     public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.book_list_row, parent, false);
+        //setHasStableIds(true);
         return new BookViewHolder(itemView);
+
 
     }
 
@@ -61,6 +68,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
         Log.d("IMG",note.getImagePath());
         holder.timestamp.setText(note.getAuthor());
         holder.note.setText(note.getBook());
+        holder.setIsRecyclable(false);
+//        setHasStableIds(true);
         if(!note.getImagePath().isEmpty()) {
             Picasso.get().load(f).into(holder.dot);
         }
@@ -128,5 +137,20 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
             notifyDataSetChanged();
         }
     };
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(hasStableIds);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
 }

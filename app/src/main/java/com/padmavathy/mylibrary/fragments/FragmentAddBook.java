@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +66,8 @@ public class FragmentAddBook extends Fragment {
     Book book;
     DatabaseHelper db;
     String marking,binding,condition;
+    TextView tv_field_err;
+    String currentDateTimeString;
     public FragmentAddBook(){
 
     }
@@ -92,11 +96,13 @@ public class FragmentAddBook extends Fragment {
         et_DateReturned = (EditText)postView2.findViewById(R.id.Datereturn_add);
         saveData = (ImageView)postView2.findViewById(R.id.saveData);
         imgBackPress = (ImageView)postView2.findViewById(R.id.img_back_edit);
+        tv_field_err = (TextView)postView2.findViewById(R.id.tv_field_err_add);
 
         selectImage = (RelativeLayout)postView2.findViewById(R.id.img_rel_add);
         imgBook = (ImageView)postView2.findViewById(R.id.img_add);
 
         myCalendar = Calendar.getInstance();
+        tv_field_err.setVisibility(View.GONE);
 
         imgBackPress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,11 +209,13 @@ public class FragmentAddBook extends Fragment {
                 String dateLent = et_DateLent.getText().toString();
                 String dateReturned = et_DateReturned.getText().toString();
                 String _quantity  = et_quantity.getText().toString();
+                currentDateTimeString= java.text.DateFormat.getDateTimeInstance().format(new Date());
+                Log.d("Current DateTime",currentDateTimeString);
 
-                if((!(TextUtils.isEmpty(b))) &&
-                        (!(TextUtils.isEmpty(a))) &&
-                        (!(TextUtils.isEmpty(i)))&&
-                        (!(TextUtils.isEmpty(m))) &&
+                if((!(TextUtils.isEmpty(b))) ||
+                        (!(TextUtils.isEmpty(a)))) {
+                    tv_field_err.setVisibility(View.GONE);
+                       /* (!(TextUtils.isEmpty(m))) &&
                         (!(TextUtils.isEmpty(bind))) &&
                         (!(TextUtils.isEmpty(con)))&&
                         (!(TextUtils.isEmpty(loc)))&&
@@ -215,7 +223,7 @@ public class FragmentAddBook extends Fragment {
                         (!(TextUtils.isEmpty(pricepaid)))&&
                         (!(TextUtils.isEmpty(lent_price)))&&
                         (!(TextUtils.isEmpty(dateLent)))&&
-                        (!(TextUtils.isEmpty(dateReturned)))){
+                        (!(TextUtils.isEmpty(dateReturned)))){*/
                     book.setBook(b);
                     book.setAuthor(a);
                     book.setIsbn(i);
@@ -228,8 +236,11 @@ public class FragmentAddBook extends Fragment {
                     book.setLent_price(lent_price);
                     book.setQuantity(_quantity);
                     book.setImagePath(_path);
+                    book.setDateLent(dateLent);
+                    book.setDateReturned(dateReturned);
+                    book.setCurrentTimestamp(currentDateTimeString);
 
-                    db.insertNote(b,a,i,con,m,bind,loc,lent_price,book_price,pricepaid,_quantity,_path);
+                    db.insertNote(b,a,i,con,m,bind,loc,lent_price,book_price,pricepaid,_quantity,_path,dateLent,dateReturned,currentDateTimeString);
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     FragmentBookList NAME = new FragmentBookList();
@@ -237,7 +248,21 @@ public class FragmentAddBook extends Fragment {
                     fragmentTransaction.commit();
                 }
                 else {
-                    if(TextUtils.isEmpty(b)){
+                    if(((TextUtils.isEmpty(b))) &&
+                            ((TextUtils.isEmpty(a))) &&
+                            ((TextUtils.isEmpty(i))) &&
+                            ((TextUtils.isEmpty(m))) &&
+                            ((TextUtils.isEmpty(bind))) &&
+                            ((TextUtils.isEmpty(con)))&&
+                            ((TextUtils.isEmpty(loc)))&&
+                            ((TextUtils.isEmpty(book_price)))&&
+                            ((TextUtils.isEmpty(lent_price)))&&
+                            ((TextUtils.isEmpty(dateLent)))&&
+                            ((TextUtils.isEmpty(dateReturned)))){
+                        tv_field_err.setVisibility(View.VISIBLE);
+                        //Toast.makeText(getContext(), "Please fill any one of the fields", Toast.LENGTH_SHORT).show();
+                    }
+                   /* if(TextUtils.isEmpty(b)){
                         et_bookname.setError("This field should not be empty");
                     }
                     if(TextUtils.isEmpty(a)){
@@ -269,7 +294,7 @@ public class FragmentAddBook extends Fragment {
                     }
                     if(TextUtils.isEmpty(dateReturned)){
                         et_DateReturned.setError("This field should not be empty");
-                    }
+                    }*/
                 }
             }
         });
@@ -306,13 +331,13 @@ public class FragmentAddBook extends Fragment {
                         marking = "Underline";
                         et_marking.setText(marking);
                         dialog.dismiss();
-                        Toast.makeText(getContext(), "Clicked on Underline", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "Clicked on Underline", Toast.LENGTH_LONG).show();
                         break;
                     case 2:
                         marking = "Highlighted";
                         et_marking.setText(marking);
                         dialog.dismiss();
-                        Toast.makeText(getContext(), "Clicked on Highlighed", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "Clicked on Highlighed", Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -548,7 +573,7 @@ public class FragmentAddBook extends Fragment {
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getActivity(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
                         }
 
                         // check for permanent denial of any permission

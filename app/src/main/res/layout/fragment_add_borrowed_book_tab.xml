@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".EditBookActivity"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_custom_add_borrow"
+            android:id="@+id/toolbar_add_borrow"/>
+
+        <ImageView
+            android:id="@+id/img_bor"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:src="@drawable/ic_baseline_camera_alt_24"/>
+
+        <RelativeLayout
+            android:layout_below="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="@dimen/_12sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/ettitle"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Title"
+                android:layout_below="@+id/tv_title"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Person Name"
+                android:layout_below="@+id/ettitle"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/etauthors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Person Name"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_12sdp"
+                android:layout_below="@+id/tv_author"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_Datelentto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date Borrowed"
+                android:layout_below="@+id/etauthors"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/DateBor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date Borrowed"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_12sdp"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:layout_below="@+id/tv_Datelentto"
+                android:textColor="@color/colorPrimaryDark"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_Datelentin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date Returned"
+                android:layout_below="@+id/DateBor"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/etDatereturn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date Returned"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_12sdp"
+                android:layout_below="@+id/tv_Datelentin"
+                android:clickable="true"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:editable="false"
+                android:focusable="false"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

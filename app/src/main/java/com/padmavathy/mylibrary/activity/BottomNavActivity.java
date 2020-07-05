@@ -31,6 +31,13 @@ import com.padmavathy.mylibrary.fragments.FragmentBookList;
 import com.padmavathy.mylibrary.fragments.FragmentBorrowedBook;
 import com.padmavathy.mylibrary.fragments.FragmentOnlineBookSearch;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class BottomNavActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FragmentBookList fragment1;
@@ -45,6 +52,19 @@ public class BottomNavActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav);
+
+
+        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        Log.d("Current DateTime",currentDateTimeString);
+        DateFormat df = new SimpleDateFormat("dd MMM yyyy hh:mm:ss aa");
+        try {
+            Date date = df.parse(currentDateTimeString);
+            SimpleDateFormat print = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa");
+            System.out.println(print.format(date));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         toolbar = findViewById(R.id.bottom_tool1);
         setSupportActionBar(toolbar);
@@ -61,7 +81,7 @@ public class BottomNavActivity extends AppCompatActivity {
         //default fragment that should be visible on open
         handleFragments(fragment1);
         SharedPreferences prefs = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
-        String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
+        String name = prefs.getString("name", "My Library");//"No name defined" is the default value.
         if(!name.trim().isEmpty()){
             tv.setText(name);
         }
@@ -141,6 +161,8 @@ public class BottomNavActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame1, fragment);
         fragmentTransaction.commit();
+       /* finish();
+        startActivity(getIntent());*/
     }
 
 

@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,6 +66,8 @@ private static final String IMAGE_DIRECTORY = "/mylibrary";
 private int GALLERY = 1, CAMERA = 2;
 RelativeLayout selectImage;
 ImageView imgBook;
+TextView tv_fill_err;
+String dateLent,dateReturned,currentTimeStamp;
 
     public FragmentEditBook(){
 
@@ -91,6 +94,9 @@ ImageView imgBook;
         et_DateReturned = (EditText)postView2.findViewById(R.id.Datereturn);
         saveData = (ImageView)postView2.findViewById(R.id.saveData);
         imgBackPress = (ImageView)postView2.findViewById(R.id.img_back_edit);
+        tv_fill_err = (TextView)postView2.findViewById(R.id.tv_field_err);
+
+        tv_fill_err.setVisibility(View.GONE);
 
         selectImage = (RelativeLayout)postView2.findViewById(R.id.img_rel);
         imgBook = (ImageView)postView2.findViewById(R.id.img);
@@ -203,17 +209,17 @@ ImageView imgBook;
                 String dateReturned = et_DateReturned.getText().toString();
                 String _quantity  = et_quantity.getText().toString();
 
-                if((!(TextUtils.isEmpty(b))) &&
-                        (!(TextUtils.isEmpty(a))) &&
-                        (!(TextUtils.isEmpty(i)))&&
-                        (!(TextUtils.isEmpty(m))) &&
+                if((!(TextUtils.isEmpty(b))) ||
+                        (!(TextUtils.isEmpty(a)))){
+                    tv_fill_err.setVisibility(View.GONE);
+                       /* (!(TextUtils.isEmpty(m))) &&
                         (!(TextUtils.isEmpty(bind))) &&
                         (!(TextUtils.isEmpty(con)))&&
                         (!(TextUtils.isEmpty(loc)))&&
                         (!(TextUtils.isEmpty(book_price)))&&
                         (!(TextUtils.isEmpty(lent_price)))&&
                         (!(TextUtils.isEmpty(dateLent)))&&
-                        (!(TextUtils.isEmpty(dateReturned)))){
+                        (!(TextUtils.isEmpty(dateReturned)))){*/
                     book.setBook(b);
                     book.setAuthor(a);
                     book.setIsbn(i);
@@ -226,6 +232,9 @@ ImageView imgBook;
                     book.setLent_price(lent_price);
                     book.setQuantity(_quantity);
                     book.setImagePath(_path);
+                    book.setDateLent(dateLent);
+                    book.setDateReturned(dateReturned);
+                    book.setCurrentTimestamp(currentTimeStamp);
 
                     db.updateNote(book);
                     FragmentManager fragmentManager = getFragmentManager();
@@ -235,7 +244,21 @@ ImageView imgBook;
                     fragmentTransaction.commit();
                 }
                 else {
-                    if(TextUtils.isEmpty(b)){
+                    if(((TextUtils.isEmpty(b))) &&
+                            ((TextUtils.isEmpty(a))) &&
+                            ((TextUtils.isEmpty(i))) &&
+                        ((TextUtils.isEmpty(m))) &&
+                        ((TextUtils.isEmpty(bind))) &&
+                        ((TextUtils.isEmpty(con)))&&
+                        ((TextUtils.isEmpty(loc)))&&
+                        ((TextUtils.isEmpty(book_price)))&&
+                        ((TextUtils.isEmpty(lent_price)))&&
+                        ((TextUtils.isEmpty(dateLent)))&&
+                        ((TextUtils.isEmpty(dateReturned)))){
+                        tv_fill_err.setVisibility(View.VISIBLE);
+                        //Toast.makeText(getContext(), "Please fill any one of the fields", Toast.LENGTH_SHORT).show();
+                    }
+                    /*if(TextUtils.isEmpty(b)){
                         et_bookname.setError("This field should not be empty");
                     }
                     if(TextUtils.isEmpty(a)){
@@ -267,7 +290,7 @@ ImageView imgBook;
                     }
                     if(TextUtils.isEmpty(dateReturned)){
                         et_DateReturned.setError("This field should not be empty");
-                    }
+                    }*/
                 }
             }
         });
@@ -290,6 +313,9 @@ ImageView imgBook;
         pricepaid = book.getPaid_price();
         quantity = book.getQuantity();
         img_path = book.getImagePath();
+        dateLent = book.getDateLent();
+        dateReturned = book.getDateReturned();
+        currentTimeStamp = book.getCurrentTimestamp();
 
         et_bookname.setText(bookname);
         et_author.setText(author);
@@ -302,6 +328,8 @@ ImageView imgBook;
         et_bookprice.setText(bookprice);
         et_pricepaid.setText(pricepaid);
         et_quantity.setText(quantity);
+        et_DateLent.setText(dateLent);
+        et_DateReturned.setText(dateReturned);
 
         _path = img_path;
         if(!_path.trim().isEmpty() && _path!=null){
@@ -340,13 +368,13 @@ ImageView imgBook;
                         marking = "Underline";
                         et_marking.setText(marking);
                         dialog.dismiss();
-                        Toast.makeText(getContext(), "Clicked on Underline", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "Clicked on Underline", Toast.LENGTH_LONG).show();
                         break;
                     case 2:
                         marking = "Highlighted";
                         et_marking.setText(marking);
                         dialog.dismiss();
-                        Toast.makeText(getContext(), "Clicked on Highlighed", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getContext(), "Clicked on Highlighed", Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -582,7 +610,7 @@ ImageView imgBook;
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getActivity(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
                         }
 
                         // check for permanent denial of any permission

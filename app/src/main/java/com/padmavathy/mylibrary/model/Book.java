@@ -20,6 +20,9 @@ public class Book {
     public static final String COLUMN_PAID_PRICE = "paid_price";
     public static final String COLUMN_QUANTITY = "quantity";
     public static final String COLUMN_IMG_PATH = "img_path";
+    public static final String COLUMN_DATE_LENT = "date_lent";
+    public static final String COLUMN_DATE_RETURNED = "date_returned";
+    public static final String COLUMN_CURRENT_DATE = "current_dateTime";
 
     private int id;
     private String book;
@@ -34,25 +37,18 @@ public class Book {
     private String paid_price;
     private String quantity;
     private String img_path;
-
+    private String dateLent;
+    private String dateReturned;
+    private String currentTimestamp;
 
     // Creating table query
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + COLUMN_ID
-            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_BOOK + " TEXT NOT NULL, " + COLUMN_AUTHOR + " TEXT," + COLUMN_ISBN + " TEXT, " + COLUMN_CONDITION + " TEXT, " + COLUMN_MARKING + " TEXT, " +  COLUMN_BINDING +" TEXT, " + COLUMN_LOCATION +" TEXT," + COLUMN_LENT_PRICE + " TEXT, " + COLUMN_BOOK_PRICE + " TEXT, " + COLUMN_PAID_PRICE + " TEXT, "+ COLUMN_QUANTITY + " TEXT, " +  COLUMN_IMG_PATH + " TEXT " + ");";
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_BOOK + " TEXT NOT NULL, " + COLUMN_AUTHOR + " TEXT," + COLUMN_ISBN + " TEXT, " + COLUMN_CONDITION + " TEXT, " + COLUMN_MARKING + " TEXT, " +  COLUMN_BINDING +" TEXT, " + COLUMN_LOCATION +" TEXT," + COLUMN_LENT_PRICE + " TEXT, " + COLUMN_BOOK_PRICE + " TEXT, " + COLUMN_PAID_PRICE + " TEXT, "+ COLUMN_QUANTITY + " TEXT, " +  COLUMN_IMG_PATH + " TEXT, " + COLUMN_DATE_LENT + " TEXT, "+ COLUMN_DATE_RETURNED + " TEXT, "+ COLUMN_CURRENT_DATE + " TEXT " + ");";
 
     public Book() {
     }
 
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Book(int id, String book, String author, String isbn, String condition, String marking, String binding, String location, String lent_price, String book_price, String paid_price, String quantity,String img_path) {
+    public Book(int id, String book, String author, String isbn, String condition, String marking, String binding, String location, String lent_price, String book_price, String paid_price, String quantity, String img_path, String dateLent, String dateReturned, String currentTimestamp) {
         this.id = id;
         this.book = book;
         this.author = author;
@@ -66,6 +62,41 @@ public class Book {
         this.paid_price = paid_price;
         this.quantity = quantity;
         this.img_path = img_path;
+        this.dateLent = dateLent;
+        this.dateReturned = dateReturned;
+        this.currentTimestamp = currentTimestamp;
+    }
+
+    public String getDateLent() {
+        return dateLent;
+    }
+
+    public void setDateLent(String dateLent) {
+        this.dateLent = dateLent;
+    }
+
+    public String getDateReturned() {
+        return dateReturned;
+    }
+
+    public void setDateReturned(String dateReturned) {
+        this.dateReturned = dateReturned;
+    }
+
+    public String getCurrentTimestamp() {
+        return currentTimestamp;
+    }
+
+    public void setCurrentTimestamp(String currentTimestamp) {
+        this.currentTimestamp = currentTimestamp;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getImagePath(){

@@ -18,17 +18,31 @@
 
         <RelativeLayout
             android:id="@+id/img_rel"
-            android:layout_width="@dimen/_70sdp"
+            android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_height="@dimen/_70sdp">
+            android:layout_height="@dimen/_100sdp">
 
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
+                android:layout_centerHorizontal="true"
                 android:background="#ffffff"
                 android:src="@drawable/ic_baseline_camera_alt_24"/>
+
+            <TextView
+                android:id="@+id/tv_field_err"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_11sdp"
+                android:text="Please fill any one of the fields"
+                android:layout_below="@+id/img" />
         </RelativeLayout>
 
         <RelativeLayout
