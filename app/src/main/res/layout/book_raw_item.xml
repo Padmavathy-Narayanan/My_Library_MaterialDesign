@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_180sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:background="#fff"
+    android:padding="8dp"
+    android:id="@+id/container">
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:src="@drawable/ic_baseline_library_books_24"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_170sdp"
+        android:layout_margin="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:text="Book Title"
+            android:textSize="@dimen/_11sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/poppins_medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_below="@+id/title"
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:text="Author"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/colorPrimaryDark"
+            android:maxLines="2"
+            />
+
+        <TextView
+            android:layout_below="@+id/author"
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textSize="@dimen/_9sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLines="1"
+            android:text="Page Count: " />
+
+        <TextView
+            android:layout_below="@+id/category"
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:text="Rating: "
+            android:textSize="@dimen/_9sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:gravity="center" />
+
+        <RatingBar
+            android:layout_below="@+id/price"
+            android:id="@+id/ratingBar"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:numStars="5"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            android:isIndicator="false"
+            android:stepSize="1.0"
+            style="@style/RatingBar"
+            android:progressTint="@color/colorPrimaryDark"
+            android:secondaryProgressTint="@android:color/transparent"
+            android:rating="0.0" />
+    </RelativeLayout>
+</LinearLayout>

@@ -7,6 +7,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
+        android:id="@+id/appBar"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryDark"
         android:paddingTop="@dimen/appbar_padding_top"
@@ -22,6 +23,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
    <RelativeLayout
+       android:visibility="visible"
        android:id="@+id/onlineBookSearchRelativeLayout"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
@@ -66,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ISBN"
-            android:inputType="text"
+            android:inputType="number"
             android:layout_below="@+id/tv_title"
             android:textCursorDrawable="@drawable/back_cursor"
             android:fontFamily="@font/poppins_light"
@@ -120,7 +122,7 @@
             android:layout_height="wrap_content"
             android:hint="Author Name"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:inputType="number"
+            android:inputType="text"
             android:fontFamily="@font/poppins_light"
             android:textSize="@dimen/_12sdp"
             android:layout_below="@+id/tv_isbn"
@@ -149,5 +151,19 @@
            />
 
    </RelativeLayout>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progressCircular"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:visibility="gone"/>
+
+    <include layout="@layout/online_book_list"
+        android:visibility="gone"
+        android:id="@+id/onlineBookListView"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

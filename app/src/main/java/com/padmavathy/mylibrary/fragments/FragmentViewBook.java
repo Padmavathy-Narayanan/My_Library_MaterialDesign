@@ -26,6 +26,7 @@ import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.activity.BottomNavActivity;
 import com.padmavathy.mylibrary.database.DatabaseHelper;
 import com.padmavathy.mylibrary.model.Book;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -109,7 +110,12 @@ public class FragmentViewBook extends Fragment {
         img_path = book.getImagePath();
 
         if(!img_path.trim().isEmpty() && img_path!=null){
-            showImage(img_path);
+            if(img_path.startsWith("http")){
+                Picasso.get().load(img_path).into(img_book);
+            }
+            else {
+                showImage(img_path);
+            }
         }
 
         tv_bookname.setText(bookname);

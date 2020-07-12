@@ -42,6 +42,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.database.DatabaseHelper;
 import com.padmavathy.mylibrary.model.Book;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -333,7 +334,12 @@ String dateLent,dateReturned,currentTimeStamp;
 
         _path = img_path;
         if(!_path.trim().isEmpty() && _path!=null){
-            showImage(_path);
+            if(_path.startsWith("http")){
+                Picasso.get().load(_path).into(imgBook);
+            }
+            else {
+                showImage(_path);
+            }
         }
 
         return postView2;

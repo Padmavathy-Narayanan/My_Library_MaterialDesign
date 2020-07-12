@@ -79,6 +79,7 @@ public class FragmentBookList extends Fragment {
 
     private FragmentViewBook fragment;
     private FragmentAddBook fragmentAddBook;
+    private FragmentWishlist fragmentWishlist;
     SearchView searchMain;
     String task;
     Toolbar toolbar;
@@ -107,6 +108,7 @@ public class FragmentBookList extends Fragment {
         notesList.addAll(db.getAllNotes());
         fragment =  new FragmentViewBook();
         fragmentAddBook = new FragmentAddBook();
+        fragmentWishlist = new FragmentWishlist();
 
         builder_1 = new AlertDialog.Builder(getActivity(),R.style.DialogTheme);
         recyclerView = postView1.findViewById(R.id.recycler_view);
@@ -236,7 +238,8 @@ public class FragmentBookList extends Fragment {
                 //Toast.makeText(getActivity(),"Add Book",Toast.LENGTH_LONG).show();
                 break;
             case R.id.action_text:
-                Toast.makeText(getActivity(),"Wishlist",Toast.LENGTH_LONG).show();
+                handleFragments(fragmentWishlist);
+                //Toast.makeText(getActivity(),"Wishlist",Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;

@@ -1,6 +1,8 @@
 package com.padmavathy.mylibrary.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.model.Book;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,9 +76,16 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookVi
         holder.timestamp.setText(note.getAuthor());
         holder.note.setText(note.getBook());
         holder.setIsRecyclable(false);
+
 //        setHasStableIds(true);
         if(!note.getImagePath().isEmpty()) {
-            Picasso.get().load(f).into(holder.dot);
+            if (note.getImagePath().startsWith("http")) {
+                Log.d("Image_URL", note.getImagePath());
+                Picasso.get().load(note.getImagePath()).into(holder.dot);
+            }
+            else {
+                Picasso.get().load(f).into(holder.dot);
+            }
         }
     }
 
