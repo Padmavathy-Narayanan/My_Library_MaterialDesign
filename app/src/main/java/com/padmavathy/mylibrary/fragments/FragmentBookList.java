@@ -2,9 +2,13 @@ package com.padmavathy.mylibrary.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +39,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.internal.NavigationMenu;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.adapter.BookListAdapter;
@@ -40,6 +52,9 @@ import com.padmavathy.mylibrary.database.DatabaseHelper;
 import com.padmavathy.mylibrary.model.Book;
 import com.padmavathy.mylibrary.utils.MyDividerItemDecoration;
 import com.padmavathy.mylibrary.utils.RecyclerTouchListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -85,6 +100,11 @@ public class FragmentBookList extends Fragment {
     Toolbar toolbar;
     TextView tv_tool;
     private TextView noNotesView;
+    RequestQueue requestQueue;
+    ProgressDialog progress;
+    ProgressBar progressBar;
+    TextView textViewDownloadPercent;
+    RelativeLayout relativeLayoutProgress;
 
     public FragmentBookList() {
         // Required empty public constructor
@@ -101,6 +121,8 @@ public class FragmentBookList extends Fragment {
 
         db = new DatabaseHelper(getActivity());
         n = new Book();
+        // RequestQueue For Handle Network Request
+        requestQueue = Volley.newRequestQueue(getContext());
 
         if(notesList!=null && notesList.size()>0){
             notesList.clear();
@@ -114,8 +136,16 @@ public class FragmentBookList extends Fragment {
         recyclerView = postView1.findViewById(R.id.recycler_view);
         searchMain = (SearchView) postView1.findViewById(R.id.search_main);
         noNotesView = postView1.findViewById(R.id.empty_notes_view);
+       /* textViewDownloadPercent = postView1.findViewById(R.id.download_percent);
+        relativeLayoutProgress = postView1.findViewById(R.id.progressBarRelativeLayout);*/
 
         mAdapter = new BookListAdapter(getContext(), notesList);
+        progressBar = postView1.findViewById(R.id.progressDownload);
+        progressBar.setVisibility(View.GONE);
+
+
+        progress = new ProgressDialog(getContext());
+
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -225,6 +255,27 @@ public class FragmentBookList extends Fragment {
                 }
                 return false;
             case R.id.action_settings:
+                boolean res = false;
+
+                ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    // fetch data
+                    res = postData();
+
+
+                    if(res==true){
+                        //relativeLayoutProgress.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                    }
+                } else {
+                    // display error
+                    Toast.makeText(getContext(),"No internet Connection,Please try again!",Toast.LENGTH_LONG).show();
+                }
+
 
                 // Do Fragment menu item stuff here
                 return true;
@@ -246,6 +297,77 @@ public class FragmentBookList extends Fragment {
         }
 
         return false;
+    }
+
+    // Post Request For JSONObject
+    public boolean postData() {
+        //relativeLayoutProgress.setVisibility(View.VISIBLE);
+        //progress.show(getContext(), "Exporting...", "Please wait", true);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JSONObject object = new JSONObject();
+        try {
+            //input your API parameters
+            object.put("ISBN","830825541");
+            object.put("LentTo","TEST");
+            object.put("LentDate","2020-07-10");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        int i = 0;
+         for(Book b : notesList) {
+             System.out.println("LIST DATA: " + b.getBook());
+             // Enter the correct url for your api service site
+             String url = "http://104.37.186.201/MyLibraryService/MyLibService.svc/InsertBookDetailsData?UserId=" +"1233"+
+                     "&BookTitle="+b.getBook()+
+                     "&BookAuthor="+b.getAuthor()+
+                     "&ISBN="+b.getIsbn() +
+                     "&BookCondition="+b.getCondition() +
+                     "&BookMarkings="+b.getMarking() +
+                     "&BookBindings="+b.getBinding() +
+                     "&Location="+ b.getLocation() +
+                     "&BookPrice="+ b.getBook_price() +
+                     "&PricePaid="+ b.getPaid_price() +
+                     "&Quantity="+ b.getQuantity() +
+                     "&CreatedBy="+"vijay"+
+                     "&IsUpdate="+"N" +
+                     "&BookImage="+ b.getImagePath();
+             i++;
+
+             //String updated_url = url + "?" + "ISBN=" + "830825541" + "&LentTo=" + "TEST" + "&LentDate=" + "2020-07-10";
+
+
+             final int finalI = i;
+             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, object,
+                     new Response.Listener<JSONObject>() {
+                         @Override
+                         public void onResponse(JSONObject response) {
+                             //relativeLayoutProgress.setVisibility(View.VISIBLE);
+                             progressBar.setVisibility(View.VISIBLE);
+                             progressBar.setAlpha(0.2f);
+                             //progressBar.setProgress((int) (Math.random() * 100));
+                             //int countDownload = (finalI/notesList.size())*100;
+                             //textViewDownloadPercent.setText(String.valueOf(countDownload)+"%");
+
+                             if(finalI == notesList.size()){
+                                 progressBar.setVisibility(View.GONE);
+                                 //relativeLayoutProgress.setVisibility(View.GONE);
+                                 Toast.makeText(getContext(),"Export Successful!",Toast.LENGTH_LONG).show();
+                             }
+                             //
+                             //resultTextView.setText("String Response : "+ response.toString());
+                         }
+                     }, new Response.ErrorListener() {
+                 @Override
+                 public void onErrorResponse(VolleyError error) {
+                     Toast.makeText(getContext(),"Error getting response",Toast.LENGTH_LONG).show();
+                     //resultTextView.setText("Error getting response");
+                 }
+             });
+             requestQueue.add(jsonObjectRequest);
+         }
+
+         return true;
     }
 
     private void showAlertDialog() {

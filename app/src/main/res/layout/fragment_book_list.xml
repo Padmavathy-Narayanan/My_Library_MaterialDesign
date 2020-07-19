@@ -55,4 +55,15 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/_11sdp" />
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressDownload"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:indeterminateTint="@color/colorPrimaryDark"/>
+
+
+   </RelativeLayout>

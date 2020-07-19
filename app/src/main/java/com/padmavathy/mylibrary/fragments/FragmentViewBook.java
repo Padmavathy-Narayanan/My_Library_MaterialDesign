@@ -1,14 +1,18 @@
 package com.padmavathy.mylibrary.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +46,9 @@ public class FragmentViewBook extends Fragment {
     FragmentEditBook fragmentEditBook;
     Book book;
     DatabaseHelper db;
+    Button button_view;
+
+    FragmentLentView fragmentLentView;
 
     public FragmentViewBook(){
 
@@ -82,7 +89,9 @@ public class FragmentViewBook extends Fragment {
         deleteData = (ImageView)postView2.findViewById(R.id.deleteData);
 
         toolbar_tit = (TextView)postView2.findViewById(R.id.toolbar_title_view_isbn);
+        button_view = (Button) postView2.findViewById(R.id.view);
         fragmentEditBook =  new FragmentEditBook();
+        fragmentLentView = new FragmentLentView();
 
         //setupToolbar();
 
@@ -108,6 +117,31 @@ public class FragmentViewBook extends Fragment {
         pricepaid = book.getPaid_price();
         quantity = book.getQuantity();
         img_path = book.getImagePath();
+
+        Log.d("LENT_ISBN_V",isbn);
+
+            button_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+                            .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        // fetch data
+                        Bundle args_1 = new Bundle();
+                        Log.d("LENT_ISBN_V", isbn);
+                        args_1.putString("ValueKey", isbn);
+                        fragmentLentView.setArguments(args_1);
+                        handleFragments(fragmentLentView);
+                    } else {
+                        // display error
+                        Toast.makeText(getContext(),"No internet Connection,Please try again!",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            });
 
         if(!img_path.trim().isEmpty() && img_path!=null){
             if(img_path.startsWith("http")){

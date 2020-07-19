@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/_40sdp"
+    android:layout_height="match_parent">
+
+  <!--  <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay">-->
+
+        <include layout="@layout/toolbar_custom_view_lent_in"
+            android:id="@+id/toolbarLentInView"/>
+
+        <!--  <androidx.appcompat.widget.Toolbar
+              android:id="@+id/toolbar5"
+              android:layout_width="match_parent"
+              android:layout_height="56dp"
+              android:background="?attr/colorPrimaryDark"
+              app:layout_scrollFlags="scroll|enterAlways"
+              app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+
+        <!--  <com.google.android.material.tabs.TabLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              app:tabIconTint="@android:color/white"
+              android:id="@+id/tabs5">
+
+              <com.google.android.material.tabs.TabItem
+                  android:id="@+id/tab_icon1"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Borrowed Books"
+                  app:tabIndicatorColor="@color/white"
+                  style="@style/MyCustomTabLayout" />
+
+              <com.google.android.material.tabs.TabItem
+                  android:id="@+id/tab_icon2"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="History"
+                  app:tabIndicatorColor="@color/white"
+                  style="@style/MyCustomTabLayout"
+                  />
+
+          </com.google.android.material.tabs.TabLayout>-->
+
+
+  <!--  </com.google.android.material.appbar.AppBarLayout>-->
+
+    <!--  <androidx.viewpager.widget.ViewPager
+          android:id="@+id/container5"
+          android:layout_width="match_parent"
+          android:background="@android:color/white"
+          android:layout_height="match_parent"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+  -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_lentdetails"
+        android:layout_below="@+id/toolbar_borrow"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_42sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/empty_notes_view_lent_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_250sdp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:text="No records"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/_11sdp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_add_white_24dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

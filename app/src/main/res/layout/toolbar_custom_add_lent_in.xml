@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="@dimen/_40sdp">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:background="@color/colorPrimaryDark"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        />
+    <TextView
+        android:id="@+id/borrowText"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:text="Lent Details"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:fontFamily="@font/poppins"
+        android:layout_toRightOf="@+id/img_back"
+        android:textSize="@dimen/_13sdp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimaryDark"/>
+</RelativeLayout>

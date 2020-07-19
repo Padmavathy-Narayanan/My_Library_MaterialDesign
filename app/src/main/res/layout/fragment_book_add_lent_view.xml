@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_custom_add_lent_in"
+            android:id="@+id/toolbar_add_lent_in"/>
+
+        <RelativeLayout
+            android:layout_below="@+id/img"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="@dimen/_12sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/etName"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Name"
+                android:layout_below="@+id/tv_title"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <TextView
+                android:id="@+id/tv_Datelentto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lent Date"
+                android:layout_below="@+id/etName"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_8sdp"/>
+
+            <EditText
+                android:id="@+id/lentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lent Date"
+                android:fontFamily="@font/poppins"
+                android:textSize="@dimen/_12sdp"
+                android:textCursorDrawable="@drawable/back_cursor"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:layout_below="@+id/tv_Datelentto"
+                android:textColor="@color/colorPrimaryDark"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                />
+
+            <Button
+                android:id="@+id/saveLentIn"
+                android:text="SAVE"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_below="@+id/lentDate"
+                android:layout_marginLeft="@dimen/_70sdp"
+                android:layout_width="@dimen/_180sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:background="@drawable/rounded_rect_3_background"
+                android:layout_height="@dimen/_50sdp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

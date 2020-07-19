@@ -64,7 +64,7 @@
             android:layout_marginLeft="@dimen/_5sdp"
             android:textSize="@dimen/_11sdp" />
 
-        <Button
+      <!--  <Button
             android:id="@+id/lentout"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_30sdp"
@@ -93,21 +93,19 @@
             android:layout_marginLeft="@dimen/_35sdp"
             android:layout_toRightOf="@+id/lentout"
             android:textSize="@dimen/_11sdp"
-            />
+            />-->
         <Button
             android:id="@+id/view"
-            android:layout_width="@dimen/_70sdp"
+            android:layout_width="@dimen/_190sdp"
             android:layout_height="@dimen/_30sdp"
-            android:text="VIEW"
+            android:text="View Lent In/Lent Out Details"
             android:background="@drawable/rect_bg"
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/authorname"
-            android:layout_marginLeft="@dimen/_33sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_toRightOf="@+id/lentin"
-            android:layout_marginRight="@dimen/_10sdp"
             android:textSize="@dimen/_10sdp"
             />
 

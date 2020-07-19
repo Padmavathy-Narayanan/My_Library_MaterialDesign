@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="@dimen/_210sdp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Lent In/out"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:textSize="@dimen/_13sdp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+        <Button
+            android:id="@+id/lent_in"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Lent In "
+            android:textColor="@color/white"
+           android:layout_gravity="center"
+            android:background="@drawable/rounded_rect_3_background"
+            />
+        <Button
+            android:id="@+id/lent_out"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/rounded_rect_3_background"
+            android:text="Lent Out"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>
