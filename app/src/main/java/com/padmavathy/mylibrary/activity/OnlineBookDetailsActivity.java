@@ -134,11 +134,14 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
                                 wishlist.setImgPath(finalThumbnail);
                                 wishlist.setIsbn(finalIsbn);
                                 String buyLink = "";
-                                if(finalBuy!=null){
+                                if(finalBuy!=null && !finalBuy.isEmpty()){
                                     buyLink = finalBuy;
                                 }
-                                else{
+                                else if(finalInfo!=null && !finalInfo.isEmpty()){
                                     buyLink = finalInfo;
+                                }
+                                else{
+                                    buyLink = "";
                                 }
 
                                 wishlistDatabaseHelper.insertWishlist(finalTitle,finalAuthors,finalThumbnail,finalIsbn,buyLink);
@@ -184,13 +187,16 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
         tvInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (finalBuy != null) {
+                if (finalBuy != null && !finalBuy.isEmpty()) {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(finalBuy_1));
                     startActivity(i);
                 }
-                else {
+                else if(finalInfo != null && !finalInfo.isEmpty()){
                     Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(finalInfo_2));
                     startActivity(i);
+                }
+                else {
+                    Toast.makeText(OnlineBookDetailsActivity.this,"This book is not for sale",Toast.LENGTH_LONG).show();
                 }
             }
         });

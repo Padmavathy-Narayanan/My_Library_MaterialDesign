@@ -79,12 +79,12 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyView
 
         String buyLink = wishlist1.getBuyLink();
 
-        if(buyLink!=null) {
+        if(buyLink!=null && !buyLink.isEmpty()) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(buyLink));
             context.startActivity(i);
         }
         else {
-            Toast.makeText(context,"Link is not available to Buy this Book",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Not for sale",Toast.LENGTH_LONG).show();
         }
     }
 

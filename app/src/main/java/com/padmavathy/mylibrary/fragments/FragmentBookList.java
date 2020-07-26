@@ -317,21 +317,95 @@ public class FragmentBookList extends Fragment {
         int i = 0;
          for(Book b : notesList) {
              System.out.println("LIST DATA: " + b.getBook());
+
+             String bookName,bookAuthor,bookISBN,bookCondition,bookMarking,bookBinding,bookLocation,bookBookPrice,bookPaidPrice,bookQuantity,bookImagePath;
+
+             if(b.getBook() != null && !b.getBook().isEmpty()){
+                 bookName = b.getBook();
+             }
+             else {
+                 bookName = "NA";
+             }
+
+             if (b.getAuthor() != null && !b.getAuthor().isEmpty()){
+                 bookAuthor = b.getAuthor();
+             }
+             else{
+                 bookAuthor = "NA";
+             }
+             if(b.getIsbn() != null && !b.getIsbn().isEmpty()){
+                 bookISBN = b.getIsbn();
+             }
+             else {
+                 bookISBN = "NA";
+             }
+
+             if (b.getCondition() != null && !b.getCondition().isEmpty()){
+                 bookCondition = b.getCondition();
+             }
+             else{
+                 bookCondition = "NA";
+             }
+             if(b.getMarking() != null && !b.getMarking().isEmpty()){
+                 bookMarking = b.getMarking();
+             }
+             else {
+                 bookMarking = "NA";
+             }
+
+             if (b.getBinding() != null && !b.getBinding().isEmpty()){
+                 bookBinding = b.getBinding();
+             }
+             else{
+                 bookBinding = "NA";
+             }
+             if(b.getLocation() != null && !b.getLocation().isEmpty()){
+                 bookLocation = b.getLocation();
+             }
+             else {
+                 bookLocation = "NA";
+             }
+
+             if (b.getBook_price() != null && !b.getBook_price().isEmpty()){
+                 bookBookPrice = b.getBook_price();
+             }
+             else{
+                 bookBookPrice = "NA";
+             } if(b.getPaid_price() != null && !b.getPaid_price().isEmpty()){
+                 bookPaidPrice = b.getPaid_price();
+             }
+             else {
+                 bookPaidPrice = "NA";
+             }
+
+             if (b.getQuantity() != null && !b.getQuantity().isEmpty()){
+                 bookQuantity = b.getQuantity();
+             }
+             else{
+                 bookQuantity = "NA";
+             }
+             if(b.getImagePath()!=null && !b.getImagePath().isEmpty()){
+                 bookImagePath = b.getImagePath();
+             }
+             else {
+                 bookImagePath = "NA";
+             }
+
              // Enter the correct url for your api service site
              String url = "http://104.37.186.201/MyLibraryService/MyLibService.svc/InsertBookDetailsData?UserId=" +"1233"+
-                     "&BookTitle="+b.getBook()+
-                     "&BookAuthor="+b.getAuthor()+
-                     "&ISBN="+b.getIsbn() +
-                     "&BookCondition="+b.getCondition() +
-                     "&BookMarkings="+b.getMarking() +
-                     "&BookBindings="+b.getBinding() +
-                     "&Location="+ b.getLocation() +
-                     "&BookPrice="+ b.getBook_price() +
-                     "&PricePaid="+ b.getPaid_price() +
-                     "&Quantity="+ b.getQuantity() +
+                     "&BookTitle="+bookName+
+                     "&BookAuthor="+bookAuthor+
+                     "&ISBN="+bookISBN +
+                     "&BookCondition="+bookCondition +
+                     "&BookMarkings="+bookMarking +
+                     "&BookBindings="+bookBinding +
+                     "&Location="+ bookLocation +
+                     "&BookPrice="+ bookBookPrice +
+                     "&PricePaid="+ bookPaidPrice +
+                     "&Quantity="+ bookQuantity +
                      "&CreatedBy="+"vijay"+
                      "&IsUpdate="+"N" +
-                     "&BookImage="+ b.getImagePath();
+                     "&BookImage="+ bookImagePath;
              i++;
 
              //String updated_url = url + "?" + "ISBN=" + "830825541" + "&LentTo=" + "TEST" + "&LentDate=" + "2020-07-10";

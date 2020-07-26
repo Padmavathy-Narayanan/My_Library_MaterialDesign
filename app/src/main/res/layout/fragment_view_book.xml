@@ -103,11 +103,27 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_below="@+id/authorname"
             android:layout_marginTop="@dimen/_20sdp"
             android:textSize="@dimen/_10sdp"
             />
+
+        <Button
+            android:id="@+id/searchImage"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_toRightOf="@+id/view"
+            android:background="@drawable/rect_bg"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_search_24dp"
+            android:text="Search Image"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            android:layout_below="@+id/authorname"
+        />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -120,9 +136,24 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/progressCircular"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorPrimaryDark"
+            android:visibility="gone"/>
+
+        <include layout="@layout/online_book_image_list"
+            android:visibility="visible"
+            android:id="@+id/onlineBookImageListView"/>
+
     <RelativeLayout
-        android:layout_marginBottom="@dimen/_70sdp"
-            android:layout_below="@+id/view"
+            android:id="@+id/details_relative_layout"
+            android:layout_marginBottom="@dimen/_70sdp"
+            android:layout_below="@+id/onlineBookImageListView"
             android:layout_width="match_parent"
             android:background="@drawable/rect_background"
             android:layout_marginLeft="@dimen/_10sdp"
@@ -393,9 +424,6 @@
                 android:fontFamily="@font/poppins"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:textStyle="bold"/>
-
-
-
         </RelativeLayout>
     </LinearLayout>
     </ScrollView>

@@ -48,10 +48,14 @@ public class BottomNavActivity extends AppCompatActivity {
     TextView tv;
     String task;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav);
+
+
 
 
         String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
@@ -166,5 +170,14 @@ public class BottomNavActivity extends AppCompatActivity {
     }
 
 
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
+        }
+    }
 
 }
