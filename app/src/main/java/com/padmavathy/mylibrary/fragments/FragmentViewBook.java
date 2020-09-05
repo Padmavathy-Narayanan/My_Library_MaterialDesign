@@ -395,9 +395,17 @@ public class FragmentViewBook extends Fragment {
         String bookAuthor = Author;
 
         boolean checkISBN = isInteger(bookISBN);
+        boolean checkBookName = isInteger(bookBook);
+        boolean checkbookAuthor = isInteger(bookAuthor);
 
-        if(checkISBN == true){
+        if(checkISBN == true && checkbookAuthor == false && checkBookName == false){
             bookISBN = ISBN;
+        }
+        else if(checkBookName == true && checkISBN == false && checkbookAuthor == false){
+            bookISBN = bookBook;
+        }
+        else if(checkbookAuthor == true && checkISBN == false && checkBookName == false){
+            bookISBN = bookAuthor;
         }
         else{
             bookISBN = "";
