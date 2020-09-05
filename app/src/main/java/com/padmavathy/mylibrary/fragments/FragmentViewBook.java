@@ -363,6 +363,30 @@ public class FragmentViewBook extends Fragment {
 
     }
 
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void search(String BookNme,String ISBN,String Author)
     {
         String search_query = "";
@@ -370,7 +394,16 @@ public class FragmentViewBook extends Fragment {
         String bookBook = BookNme;
         String bookAuthor = Author;
 
-        if (!bookISBN.matches("")){
+        boolean checkISBN = isInteger(bookISBN);
+
+        if(checkISBN == true){
+            bookISBN = ISBN;
+        }
+        else{
+            bookISBN = "";
+        }
+
+        if ( !bookISBN.matches("")){
             search_query =bookISBN;
         }
         else if (!bookBook.matches("")){
