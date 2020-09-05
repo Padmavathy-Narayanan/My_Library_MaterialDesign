@@ -373,10 +373,10 @@ public class FragmentViewBook extends Fragment {
         if (!bookISBN.matches("")){
             search_query =bookISBN;
         }
-        if (!bookBook.matches("")){
+        else if (!bookBook.matches("")){
             search_query =bookBook;
         }
-        if (!bookAuthor.matches("")){
+        else if (!bookAuthor.matches("")){
             search_query =bookAuthor;
         }
 

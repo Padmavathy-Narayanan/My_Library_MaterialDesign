@@ -22,8 +22,8 @@
         card_view:cardUseCompatPadding="true">-->
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_90sdp"
         android:layout_gravity="center"
         app:cardCornerRadius="8dp"
         android:backgroundTint="@color/light200"
@@ -39,6 +39,8 @@
                 android:layout_marginRight="@dimen/_1sdp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0dp"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
                 android:gravity="center"
                 android:scaleType="fitXY"
                 android:layout_marginTop="@dimen/_1sdp"
