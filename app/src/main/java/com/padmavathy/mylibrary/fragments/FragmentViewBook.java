@@ -366,8 +366,8 @@ public class FragmentViewBook extends Fragment {
     private void search(String BookNme,String ISBN,String Author)
     {
         String search_query = "";
-        String bookISBN = BookNme;
-        String bookBook = ISBN;
+        String bookISBN = ISBN;
+        String bookBook = BookNme;
         String bookAuthor = Author;
 
         if (!bookISBN.matches("")){
@@ -470,7 +470,9 @@ public class FragmentViewBook extends Fragment {
                                 //String thumbnail = volumeInfo.getJSONObject("imageLinks").getString("thumbnail");
 
                                 String isbn = volumeInfo.getJSONArray("industryIdentifiers").getJSONObject(0).getString("identifier");
-
+                                if(isbn.isEmpty() || isbn == "" || isbn == null){
+                                    isbn =book.getIsbn();
+                                }
                                 String previewLink = volumeInfo.getString("previewLink");
                                 String url = volumeInfo.getString("infoLink");
                                 //String buylink = volumeInfo.getString("webReaderLink");

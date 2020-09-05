@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -264,7 +265,8 @@ public class FragmentBookList extends Fragment {
 
                 if (networkInfo != null && networkInfo.isConnected()) {
                     // fetch data
-                    res = postData();
+                    //res = postData();
+                    new MyTask().execute();
 
 
                     if(res==true){
@@ -299,11 +301,63 @@ public class FragmentBookList extends Fragment {
         return false;
     }
 
+    class MyTask extends AsyncTask<String, String, String> {
+        ProgressDialog pDialog;
+        /**
+         * Before starting background thread
+         * Show Progress Bar Dialog
+         */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Exporting books. Please wait...");
+            pDialog.setIndeterminate(true);
+            //pDialog.setMax(100);
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.setCancelable(false);
+            pDialog.show();
+            //getActivity().showDialog(progress_bar_type);
+        }
+
+        /**
+         * Downloading file in background thread
+         */
+        @Override
+        protected String doInBackground(String... f_url) {
+            postData();
+            // After this onProgressUpdate will be called
+            //publishProgress("" + (int) ((notesList.size() * 100) / notesList.size()));
+            return null;
+        }
+
+        /**
+         * Updating progress bar
+         */
+        protected void onProgressUpdate(String... progress) {
+            // setting progress percentage
+            pDialog.show();
+            //pDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        /**
+         * After completing background task
+         * Dismiss the progress dialog
+         **/
+        @Override
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after the file was downloaded
+//            dismissDialog(progress_bar_type);
+            pDialog.dismiss();
+
+        }
+    }
+
     // Post Request For JSONObject
     public boolean postData() {
         //relativeLayoutProgress.setVisibility(View.VISIBLE);
         //progress.show(getContext(), "Exporting...", "Please wait", true);
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        /*RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
@@ -312,7 +366,30 @@ public class FragmentBookList extends Fragment {
             object.put("LentDate","2020-07-10");
         } catch (JSONException e) {
             e.printStackTrace();
+        }*/
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JSONObject object = new JSONObject();
+        try {
+            //input your API parameters
+            object.put("UserId","1233");
+            object.put("BookTitle","bookName");
+            object.put("BookAuthor","bookAuthor");
+            object.put("ISBN","bookISBN");
+            object.put("BookCondition","bookCondition");
+            object.put("BookMarkings","bookMarking");
+            object.put("BookBindings","bookBinding");
+            object.put("Location","bookLocation");
+            object.put("BookPrice","bookBookPrice");
+            object.put("PricePaid","bookPaidPrice");
+            object.put("Quantity","bookQuantity");
+            object.put("CreatedBy","vijay");
+            object.put("IsUpdate","N");
+            object.put("BookImage","bookImagePath");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
 
         int i = 0;
          for(Book b : notesList) {
@@ -337,7 +414,7 @@ public class FragmentBookList extends Fragment {
                  bookISBN = b.getIsbn();
              }
              else {
-                 bookISBN = "NA";
+                 bookISBN = "123xxxx";
              }
 
              if (b.getCondition() != null && !b.getCondition().isEmpty()){
@@ -370,22 +447,23 @@ public class FragmentBookList extends Fragment {
                  bookBookPrice = b.getBook_price();
              }
              else{
-                 bookBookPrice = "NA";
+                 bookBookPrice = "0";
              } if(b.getPaid_price() != null && !b.getPaid_price().isEmpty()){
                  bookPaidPrice = b.getPaid_price();
              }
              else {
-                 bookPaidPrice = "NA";
+                 bookPaidPrice = "0";
              }
 
              if (b.getQuantity() != null && !b.getQuantity().isEmpty()){
                  bookQuantity = b.getQuantity();
              }
              else{
-                 bookQuantity = "NA";
+                 bookQuantity = "0";
              }
              if(b.getImagePath()!=null && !b.getImagePath().isEmpty()){
                  bookImagePath = b.getImagePath();
+                 //bookImagePath = "Na";
              }
              else {
                  bookImagePath = "NA";
@@ -419,6 +497,7 @@ public class FragmentBookList extends Fragment {
                              //relativeLayoutProgress.setVisibility(View.VISIBLE);
                              progressBar.setVisibility(View.VISIBLE);
                              progressBar.setAlpha(0.2f);
+
                              //progressBar.setProgress((int) (Math.random() * 100));
                              //int countDownload = (finalI/notesList.size())*100;
                              //textViewDownloadPercent.setText(String.valueOf(countDownload)+"%");
@@ -426,7 +505,18 @@ public class FragmentBookList extends Fragment {
                              if(finalI == notesList.size()){
                                  progressBar.setVisibility(View.GONE);
                                  //relativeLayoutProgress.setVisibility(View.GONE);
-                                 Toast.makeText(getContext(),"Export Successful!",Toast.LENGTH_LONG).show();
+                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                 builder.setMessage("Export Successful!")
+                                         .setCancelable(false)
+                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                             public void onClick(DialogInterface dialog, int id) {
+                                                 //do things
+                                                 dialog.dismiss();
+                                             }
+                                         });
+                                 AlertDialog alert = builder.create();
+                                 alert.show();
+                                 //Toast.makeText(getContext(),"Export Successful!",Toast.LENGTH_LONG).show();
                              }
                              //
                              //resultTextView.setText("String Response : "+ response.toString());
