@@ -59,6 +59,8 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -266,6 +268,7 @@ public class FragmentBookList extends Fragment {
                 if (networkInfo != null && networkInfo.isConnected()) {
                     // fetch data
                     //res = postData();
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},23);
                     new MyTask().execute();
 
 
@@ -368,6 +371,11 @@ public class FragmentBookList extends Fragment {
             e.printStackTrace();
         }*/
 
+        String writeFileData = "";
+        FileOutputStream fstream;
+        File myFile = null;
+
+        boolean boolVar = false;
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject object = new JSONObject();
         try {
@@ -486,10 +494,42 @@ public class FragmentBookList extends Fragment {
                      "&BookImage="+ bookImagePath;
              i++;
 
-             //String updated_url = url + "?" + "ISBN=" + "830825541" + "&LentTo=" + "TEST" + "&LentDate=" + "2020-07-10";
+             String tmpdata = bookLocation+','+bookName+','+bookAuthor+','+bookISBN+','+
+                     bookCondition+','+bookMarking+','+bookBinding+","+"0"+','+
+                     bookBookPrice+','+bookPaidPrice+','+bookQuantity+'\n';
+             Log.d("TMP DATA",tmpdata);
 
+             try {
+                 File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                 String fileName = new SimpleDateFormat("yyyy-MM-dd'.txt'").format(new Date());
+                 fileName = "MyTheologicalLibrary_V2 "+fileName;
+                 myFile = new File(folder,fileName);
+                 System.out.println("WRITE FILE NAME"+myFile.toString());
+                 fstream = new FileOutputStream(myFile,true);
+                 fstream.write(tmpdata.getBytes());
+                 //fstream.write(password.getBytes());
+                 fstream.close();
+                 //Toast.makeText(getActivity(), "Details Saved in "+myFile.getAbsolutePath(),Toast.LENGTH_SHORT).show();
+
+             } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+
+             //String updated_url = url + "?" + "ISBN=" + "830825541" + "&LentTo=" + "TEST" + "&LentDate=" + "2020-07-10";
+             if(i==0 && !boolVar){
+                 boolVar = true;
+                 writeFileData = tmpdata;
+             }
+             if(boolVar == true && i!=0){
+                 writeFileData = writeFileData + tmpdata;
+             }
+
+            //Log.d("TEMPOFILE",writeFileData);
 
              final int finalI = i;
+             final File finalMyFile = myFile;
              JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, object,
                      new Response.Listener<JSONObject>() {
                          @Override
@@ -504,9 +544,10 @@ public class FragmentBookList extends Fragment {
 
                              if(finalI == notesList.size()){
                                  progressBar.setVisibility(View.GONE);
+
                                  //relativeLayoutProgress.setVisibility(View.GONE);
                                  AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                 builder.setMessage("Export Successful!")
+                                 builder.setMessage("Export Successful!\n\n"+"Exported File Stored in :\n"+ finalMyFile.getAbsolutePath())
                                          .setCancelable(false)
                                          .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                              public void onClick(DialogInterface dialog, int id) {
@@ -530,6 +571,7 @@ public class FragmentBookList extends Fragment {
              });
              requestQueue.add(jsonObjectRequest);
          }
+
 
          return true;
     }
@@ -736,7 +778,7 @@ public class FragmentBookList extends Fragment {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("PADMAVATHYAPP"+date); // Sat Jan 02 00:00:00 GMT 2010
+                    //System.out.println("PADMAVATHYAPP"+date); // Sat Jan 02 00:00:00 GMT 2010
 
                     n.setIsbn(employee[3]);
                     n.setBook(employee[1]);
