@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,6 +41,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.activity.BottomNavActivity;
 import com.padmavathy.mylibrary.adapter.CustomGrid;
@@ -85,6 +87,7 @@ public class FragmentViewBook extends Fragment {
     private ArrayList<BookOnlineSearch> imageList;
 
     BookOnlineSearch n;
+    CoordinatorLayout coordinatorLayout;
 
     private static  final  String BASE_URL="https://www.googleapis.com/books/v1/volumes?q=";
     LinearLayout onlineBookImageListView;
@@ -397,6 +400,7 @@ public class FragmentViewBook extends Fragment {
         boolean checkISBN = isInteger(bookISBN);
         boolean checkBookName = isInteger(bookBook);
         boolean checkbookAuthor = isInteger(bookAuthor);
+        boolean fetchImageRes = false;
 
         if(checkISBN == true && checkbookAuthor == false && checkBookName == false){
             bookISBN = ISBN;
@@ -411,7 +415,20 @@ public class FragmentViewBook extends Fragment {
             bookISBN = "";
         }
 
-        if ( !bookISBN.matches("")){
+        if(!bookISBN.matches("") && !bookBook.matches("")){
+            String bookNameSearch = "";
+            String temp = "";
+            temp = bookBook.replace("Methodism","");
+            if(temp.length()>45) {
+               bookNameSearch = temp.substring(0, 30);
+                //bookNameSearch = bookISBN;
+            }
+            else {
+                bookNameSearch = temp;
+            }
+            search_query = bookNameSearch;
+        }
+        else if ( !bookISBN.matches("")){
             search_query =bookISBN;
         }
         else if (!bookBook.matches("")){
@@ -440,17 +457,50 @@ public class FragmentViewBook extends Fragment {
             return;
         }
 
-        String final_query=search_query.replace(" ","+");
-        Uri uri=Uri.parse(BASE_URL+final_query);
+        String final_query = search_query.replace(" ", "+");
+        Uri uri = Uri.parse(BASE_URL + final_query);
         Uri.Builder buider = uri.buildUpon();
 
-        parseJson(buider.toString());
+        boolean res = parseJson(buider.toString());
+        //Toast.makeText(getContext(),String.valueOf(res),Toast.LENGTH_LONG).show();
 
+        /*if(search_query == ISBN) {
+            String final_query = search_query.replace(" ", "+");
+            Uri uri = Uri.parse(BASE_URL + final_query);
+            Uri.Builder buider = uri.buildUpon();
+
+            parseJson(buider.toString());
+            Log.d("FETCH",String.valueOf(fetchImageRes));
+            if(fetchImageRes == false){
+                if(!bookBook.isEmpty()){
+                    String final_QueryBookName = bookBook.replace(" ","+");
+                    Uri uri1 = Uri.parse(BASE_URL+final_QueryBookName);
+                    Uri.Builder builder1  = uri1.buildUpon();
+                    parseJson(builder1.toString());
+                }
+            }
+        }
+        else if(search_query == bookBook){
+            String final_query = search_query.replace(" ", "+");
+            Uri uri = Uri.parse(BASE_URL + final_query);
+            Uri.Builder buider = uri.buildUpon();
+
+            parseJson(buider.toString());
+        }
+        else if(search_query == bookAuthor){
+            String final_query = search_query.replace(" ", "+");
+            Uri uri = Uri.parse(BASE_URL + final_query);
+            Uri.Builder buider = uri.buildUpon();
+
+            parseJson(buider.toString());
+        }
+*/
     }
 
-    private void parseJson(final String key) {
+    private boolean parseJson(final String key) {
         //relativeLayoutBookDetails.setVisibility(View.GONE);
         onlineBookImageListView.setVisibility(View.VISIBLE);
+        final boolean[] isImageFetched = {false};
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, key.toString(), null,
                 new Response.Listener<JSONObject>() {
@@ -533,29 +583,48 @@ public class FragmentViewBook extends Fragment {
 
                                 if(thumbnail!=null && !thumbnail.isEmpty()){
                                     grid.setAdapter(adapter);
+                                    //isImageFetched[0] = true;
                                 }
                                 else {
-                                    Toast.makeText(getContext(),"No images found",Toast.LENGTH_LONG).show();
+                                        //search(book.getBook(),"","");
+                                        //Toast.makeText(getContext(), "No images found", Toast.LENGTH_LONG).show();
+                                        //isImageFetched[0] = false;
+
                                 }
                             }
 
-
                         } catch (JSONException e) {
-                            Toast.makeText(getContext(),"No images found",Toast.LENGTH_LONG).show();
+
+                           Snackbar snackbar;
+                            snackbar = Snackbar.make(getView(), "Please Check Book details!", Snackbar.LENGTH_SHORT);
+                            View snackBarView = snackbar.getView();
+                            snackBarView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+                            snackbar.show();
+
+                            /*Snackbar.make(getView(), "!", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+                            /*sbView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.BLACK));*/
+
+                            //Toast.makeText(getContext(),"Issue",Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                             Log.e("TAG" , e.toString());
-
+                            //search(book.getBook(),"","");
+                            isImageFetched[0] = false;
+                            //Toast.makeText(getContext(),String.valueOf(isImageFetched[0]),Toast.LENGTH_LONG).show();
                         }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"No images found",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(),"No images found",Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+               // search(book.getBook(),"","");
             }
         });
         mRequestQueue.add(request);
+        return isImageFetched[0];
     }
 
     private boolean Read_network_state(Context context)
