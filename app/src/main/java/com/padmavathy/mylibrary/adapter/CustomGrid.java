@@ -65,7 +65,7 @@ public class CustomGrid extends RecyclerView.Adapter<CustomGrid.MyViewHolder> {
                 @Override
                 public void onClick(View v) {
                     int pos = viewHolder.getAdapterPosition();
-
+                   // Toast.makeText(mContext,"pos",Toast.LENGTH_LONG).show();
                    /* AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
                     alertDialog.setTitle("Update Image");
                     alertDialog.setMessage("Do you want to update this image?");

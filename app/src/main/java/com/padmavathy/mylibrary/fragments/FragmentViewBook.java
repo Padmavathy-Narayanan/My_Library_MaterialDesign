@@ -5,14 +5,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -72,6 +78,7 @@ public class FragmentViewBook extends Fragment {
     String value;
     AlertDialog.Builder builder;
     FragmentEditBook fragmentEditBook;
+    FragmentWebView fragmentWebView;
     Book book;
     DatabaseHelper db;
     Button button_view,buttonSearchImage;
@@ -148,6 +155,7 @@ public class FragmentViewBook extends Fragment {
         progressBar = (ProgressBar) postView2.findViewById(R.id.progressCircular);
         fragmentEditBook =  new FragmentEditBook();
         fragmentLentView = new FragmentLentView();
+        fragmentWebView = new FragmentWebView();
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -301,10 +309,43 @@ public class FragmentViewBook extends Fragment {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle("Update Image");
                 alertDialog.setMessage("Do you want to update this image?");
-                alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton("View Image", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        //dialog.cancel();
+                        Bundle args_1 = new Bundle();
+                        args_1.putString("Key", n.getThumbnail());
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                        alert.setTitle("Book Image");
+
+                        WebView wv = new WebView(getActivity());
+                        wv.loadUrl(n.getThumbnail());
+                        WebSettings webSettings = wv.getSettings();
+                        webSettings.setJavaScriptEnabled(true);
+                        wv.getSettings().setSupportZoom(true);
+                        wv.getSettings().setBuiltInZoomControls(true);
+                        wv.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                        wv.setWebViewClient(new WebViewClient() {
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                view.loadUrl(url);
+                                return true;
+                            }
+                        });
+
+                        alert.setView(wv);
+                        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alert.show();
+
+                        //fragmentWebView.setArguments(args_1);
+                        //handleFragments(fragmentWebView);
                     }
                 });
                 alertDialog.setNegativeButton("YES", new DialogInterface.OnClickListener() {

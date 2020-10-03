@@ -2,6 +2,8 @@ package com.padmavathy.mylibrary.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.database.DatabaseHelper;
 import com.padmavathy.mylibrary.database.WishlistDatabaseHelper;
+import com.padmavathy.mylibrary.fragments.FragmentOnlineBookSearch;
 import com.padmavathy.mylibrary.model.Book;
 import com.padmavathy.mylibrary.model.Wishlist;
 
@@ -29,6 +32,7 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
 
     Wishlist wishlist;
     WishlistDatabaseHelper wishlistDatabaseHelper;
+    FragmentOnlineBookSearch fragmentOnlineBookSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
 
         wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
         wishlist = new Wishlist();
+
+        fragmentOnlineBookSearch = new FragmentOnlineBookSearch();
 
         //hide the default actionBar
 //        getSupportActionBar().hide();
@@ -103,7 +109,11 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
                                         db.insertNote(finalTitle,finalAuthors, finalIsbn,"","","","","","","","", finalThumbnail,"","","");
 
                                         Toast.makeText(OnlineBookDetailsActivity.this,"Book Added Successfully",Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(OnlineBookDetailsActivity.this,BottomNavActivity.class));
+                                        Intent intent = new Intent(OnlineBookDetailsActivity.this, BottomNavActivity.class);
+                                        intent.putExtra("Fragment", "Online_Book");
+                                        startActivity(intent);
+
+                                        //startActivity(new Intent(OnlineBookDetailsActivity.this,BottomNavActivity.class));
                                     }
                                 });
 
@@ -146,7 +156,11 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
 
                                 wishlistDatabaseHelper.insertWishlist(finalTitle,finalAuthors,finalThumbnail,finalIsbn,buyLink);
                                 Toast.makeText(OnlineBookDetailsActivity.this,"Book Added to Wishlist",Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(OnlineBookDetailsActivity.this,BottomNavActivity.class));
+                                Intent intent1 = new Intent(OnlineBookDetailsActivity.this, BottomNavActivity.class);
+                                intent1.putExtra("Fragment", "Online_Book");
+                                startActivity(intent1);
+
+                                //startActivity(new Intent(OnlineBookDetailsActivity.this,BottomNavActivity.class));
                             }
                         });
 

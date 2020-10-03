@@ -55,9 +55,6 @@ public class BottomNavActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav);
 
-
-
-
         String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
         Log.d("Current DateTime",currentDateTimeString);
         DateFormat df = new SimpleDateFormat("dd MMM yyyy hh:mm:ss aa");
@@ -91,6 +88,16 @@ public class BottomNavActivity extends AppCompatActivity {
         }
         else {
             tv.setText("My Library");
+        }
+
+        String sessionId = getIntent().getStringExtra("Fragment");
+        if(sessionId == null){
+            handleFragments(fragment1);
+        }
+        else{
+            if (sessionId.equals("Online_Book")) {
+                handleFragments(fragment2);
+            }
         }
 
         //pass fragments that should be visible in following switch case
@@ -171,13 +178,13 @@ public class BottomNavActivity extends AppCompatActivity {
 
 
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
         } else {
             finish();
         }
-    }
+    }*/
 
 }
