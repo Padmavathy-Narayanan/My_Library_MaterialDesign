@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,6 +33,8 @@ import com.android.volley.toolbox.Volley;
 import com.padmavathy.mylibrary.R;
 import com.padmavathy.mylibrary.adapter.OnlineBookAdapter;
 import com.padmavathy.mylibrary.model.BookOnlineSearch;
+
+//import net.skoumal.fragmentback.BackFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +71,7 @@ public class FragmentOnlineBookSearch extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +85,15 @@ public class FragmentOnlineBookSearch extends Fragment {
         search_edit_text_isbn=postView1.findViewById(R.id.online_isbn);
         search_edit_text_book = postView1.findViewById(R.id.online_book_name);
         search_edit_text_author = postView1.findViewById(R.id.online_authorname);
+
+      /*  String strtext = getArguments().getString("BottomNavActivity");
+        if (strtext == "true"){
+            clear(postView1);
+        }
+        else{
+
+        }*/
+
 
         loading_indicator=postView1.findViewById(R.id.loading_indicator);
         error_message= postView1.findViewById(R.id.message_display);
@@ -127,6 +140,13 @@ public class FragmentOnlineBookSearch extends Fragment {
         });
         return postView1;
     }
+
+    public void clear(View v){
+        search_edit_text_isbn.setText("");
+        search_edit_text_book.setText("");
+        search_edit_text_author.setText("");
+    }
+
 
     private void search()
     {
@@ -294,4 +314,6 @@ public class FragmentOnlineBookSearch extends Fragment {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
+
+
 }

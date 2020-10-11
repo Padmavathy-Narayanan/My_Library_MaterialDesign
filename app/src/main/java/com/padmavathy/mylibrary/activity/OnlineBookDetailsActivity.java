@@ -113,6 +113,9 @@ public class OnlineBookDetailsActivity extends AppCompatActivity {
                                         intent.putExtra("Fragment", "Online_Book");
                                         startActivity(intent);
 
+                                       /* Fragment fragment = new FragmentOnlineBookSearch();
+                                        FragmentManager fragmentManager = getSupportFragmentManager();
+                                        fragmentManager.beginTransaction().replace(R.id.frame1, fragment).commit();*/
                                         //startActivity(new Intent(OnlineBookDetailsActivity.this,BottomNavActivity.class));
                                     }
                                 });

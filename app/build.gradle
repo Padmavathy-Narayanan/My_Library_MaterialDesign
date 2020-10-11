@@ -43,4 +43,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
+    //implementation 'net.skoumal.fragmentback:fragment-back:0.2.3'
+
 }

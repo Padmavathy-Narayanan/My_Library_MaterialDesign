@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +32,8 @@ import com.padmavathy.mylibrary.fragments.FragmentBookList;
 import com.padmavathy.mylibrary.fragments.FragmentBorrowedBook;
 import com.padmavathy.mylibrary.fragments.FragmentOnlineBookSearch;
 
+//import net.skoumal.fragmentback.BackFragmentHelper;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +50,7 @@ public class BottomNavActivity extends AppCompatActivity {
     private BottomNavigationView mBottom;
     TextView tv;
     String task;
+    boolean navigationOnlineSearch = false;
 
 
 
@@ -80,7 +84,7 @@ public class BottomNavActivity extends AppCompatActivity {
         fragment4 =  new FragmenrHistoryBorrowedBook();
 
         //default fragment that should be visible on open
-        handleFragments(fragment1);
+        handleFragments1(fragment1);
         SharedPreferences prefs = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
         String name = prefs.getString("name", "My Library");//"No name defined" is the default value.
         if(!name.trim().isEmpty()){
@@ -92,11 +96,13 @@ public class BottomNavActivity extends AppCompatActivity {
 
         String sessionId = getIntent().getStringExtra("Fragment");
         if(sessionId == null){
-            handleFragments(fragment1);
+            handleFragments1(fragment1);
         }
         else{
             if (sessionId.equals("Online_Book")) {
+                sessionId = "";
                 handleFragments(fragment2);
+                navigationOnlineSearch = true;
             }
         }
 
@@ -106,19 +112,24 @@ public class BottomNavActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.basic_home:
-                        handleFragments(fragment1);
+                        handleFragments1(fragment1);
                         break;
 
                     case R.id.basic_onlinebook:
-                        handleFragments(fragment2);
+                   /*     Bundle bundle = new Bundle();
+                        bundle.putString("BottomNavActivity","true");
+                        // set Fragmentclass Arguments
+                        fragment2.setArguments(bundle);*/
+                        handleFragments1(fragment2);
+
                         break;
 
                     case R.id.basic_borrowedbook:
-                        handleFragments(fragment3);
+                        handleFragments1(fragment3);
                         break;
 
                     case R.id.basic_historyborrow:
-                        handleFragments(fragment4);
+                        handleFragments1(fragment4);
                         break;
                 }
                 return true;
@@ -126,6 +137,8 @@ public class BottomNavActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -176,6 +189,14 @@ public class BottomNavActivity extends AppCompatActivity {
         startActivity(getIntent());*/
     }
 
+    private void handleFragments1(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame1, fragment);
+        fragmentTransaction.commit();
+       /* finish();
+        startActivity(getIntent());*/
+    }
+
 
 
   /*  @Override
@@ -186,5 +207,29 @@ public class BottomNavActivity extends AppCompatActivity {
             finish();
         }
     }*/
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+      if (keyCode == KeyEvent.KEYCODE_BACK) {
+          //handleFragments(fragment1);
+          AlertDialog.Builder builder = new AlertDialog.Builder(this);
+          builder.setMessage("Are you sure you want to exit?")
+                  .setCancelable(false)
+                  .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int id) {
+                          BottomNavActivity.this.finish();
+                      }
+                  })
+                  .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int id) {
+                          dialog.cancel();
+                      }
+                  });
+          AlertDialog alert = builder.create();
+          alert.show();
+            //Toast.makeText(this,"exit",Toast.LENGTH_LONG).show();
+      }
+      return super.onKeyDown(keyCode, event);
+  }
+
 
 }
